@@ -62,6 +62,7 @@ Follow the interactive wizard to configure:
 After completion, your project folder includes:
 
 * `src/` - Electron main process and frontend sources
+* `src/preload.ts` - exposes IPC-safe APIs when the preload feature is enabled
 * `public/` - Static assets including `index.html`
 * `package.json` - with all scripts and dependencies
 * `.prettierrc` and `.eslintrc` - code style configs
