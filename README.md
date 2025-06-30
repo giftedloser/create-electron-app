@@ -82,6 +82,20 @@ This pattern keeps the IPC surface minimal and secure.
 
 ---
 
+## Packaging
+
+To create distributable installers for your application, run the packaged `dist`
+script:
+
+```bash
+npm run dist
+```
+
+This executes `electron-builder` using the `electron-builder.yml` file generated
+at the project root. The resulting output is placed in the `dist/` directory.
+
+---
+
 ## Development
 
 * Source code organized under `src/`
