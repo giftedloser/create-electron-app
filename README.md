@@ -191,4 +191,4 @@ MIT License © Marshall
 
 ## Contact
 
-For questions or support, open an issue or contact support@example.com
+For questions or support, open an issue or contact giftedloser on github.
