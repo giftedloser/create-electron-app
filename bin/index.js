@@ -3,10 +3,11 @@
 import { createAppWizard } from "../src/wizard.js";
 import { scaffoldProject } from "../src/generator.js";
 import { showSummaryReport } from "../src/report.js";
+import { info, error as logError } from "../src/utils/logger.js";
 
 async function main() {
   try {
-    console.log("🛠️  create-my-electron-app CLI\n-----------------------------");
+    info("🛠️  create-my-electron-app CLI\n-----------------------------");
 
     const answers = await createAppWizard();
 
@@ -16,7 +17,7 @@ async function main() {
 
     process.exit(0);
   } catch (err) {
-    console.error("\n❌ Error:", err.message);
+    logError("\n❌ Error:", err.message);
     process.exit(1);
   }
 }
