@@ -2,25 +2,26 @@
 
 import path from "path";
 import fs from "fs";
+import { info } from "./utils/logger.js";
 
 export async function showSummaryReport(result) {
   const { outDir, metadata, packageJson } = result;
-  console.log("\n✅ Project Created Successfully\n");
+  info("\n✅ Project Created Successfully\n");
 
-  console.log("📁 Output Folder:", outDir);
-  console.log("\n📦 Metadata:");
-  console.log("  Name:", metadata.appName);
-  console.log("  Title:", metadata.title);
-  console.log("  Description:", metadata.description);
-  console.log("  Author:", metadata.author);
-  console.log("  License:", metadata.license);
+  info("📁 Output Folder:", outDir);
+  info("\n📦 Metadata:");
+  info("  Name:", metadata.appName);
+  info("  Title:", metadata.title);
+  info("  Description:", metadata.description);
+  info("  Author:", metadata.author);
+  info("  License:", metadata.license);
 
-  console.log("\n🧱 Selected Features:");
-  metadata.features.forEach(f => console.log("  -", f));
+  info("\n🧱 Selected Features:");
+  metadata.features.forEach(f => info("  -", f));
 
-  console.log("\n🧰 Scripts Included:");
+  info("\n🧰 Scripts Included:");
   Object.entries(packageJson.scripts).forEach(([key, val]) => {
-    console.log(`  ${key}: ${val}`);
+    info(`  ${key}: ${val}`);
   });
 
   const readmePath = path.join(outDir, "README.md");
@@ -28,8 +29,8 @@ export async function showSummaryReport(result) {
     fs.writeFileSync(readmePath, `# ${metadata.appName}\n\n${metadata.description}\n`);
   }
 
-  console.log("\n📌 Next Steps:");
-  console.log(`  cd ${metadata.appName}`);
-  console.log("  npm install");
-  console.log("  npm run dev");
+  info("\n📌 Next Steps:");
+  info(`  cd ${metadata.appName}`);
+  info("  npm install");
+  info("  npm run dev");
 }
