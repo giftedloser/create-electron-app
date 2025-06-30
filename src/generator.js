@@ -68,6 +68,16 @@ export async function scaffoldProject(answers) {
     throw new Error(`Failed copying base templates: ${e.message}`);
   }
 
+  // Include preload script only if feature selected
+  const preloadFile = path.join(outDir, "src", "preload.ts");
+  if (!answers.features.includes("preload")) {
+    try {
+      await fs.rm(preloadFile, { force: true });
+    } catch {
+      // ignore
+    }
+  }
+
   // Copy feature templates conditionally
   for (const feature of answers.features) {
     if (feature === "prettier" || feature === "darkmode" || feature === "git") {
