@@ -7,14 +7,7 @@ export const featureChoices = [
   { title: "Prettier", value: "prettier", selected: true, description: "Code formatter" },
   { title: "Git Init", value: "git", selected: true, description: "Initialize repository" },
   { title: "SQLite Support", value: "sqlite", description: "Local database" },
-  { title: "Zod or Joi Validation", value: "validation", description: "Schema validation" },
-  { title: "Dotenv Support", value: "dotenv", description: "Environment variables" },
-  { title: "Git Hooks (Husky)", value: "husky", description: "Pre-commit hooks" },
-  { title: "Auto-generated README.md", value: "readme", description: "Create README file" },
   { title: "AD/SSO Login Stub", value: "sso", description: "Placeholder auth" },
-  { title: "Roadmap.md + Agents.md", value: "agents", description: "Planning docs" },
   { title: "Dark Mode Support", value: "darkmode", selected: true, description: "OS theme detection" },
-  { title: "Transparent Custom Window Bar", value: "frameless", description: "Borderless window" },
-  { title: "Global App Config File", value: "metaConfig", description: "config.json stub" },
-  { title: "Auto-Updater Stub", value: "autoupdate", description: "Update placeholder" }
+  
 ];

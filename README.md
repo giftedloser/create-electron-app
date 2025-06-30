@@ -8,18 +8,16 @@
 
 ## Features
 
-- **React with Vite** for fast, modern frontend development  
-- **TypeScript** strict typing across all layers  
-- **Electron main & preload processes** with secure IPC  
-- **ESLint & Prettier** configured for code quality and formatting  
-- **Git initialization** with initial commit  
-- **SQLite support** for local database integration  
-- **AD/SSO stub** for enterprise authentication scaffolding  
-- **Dark mode support** aligned with native OS theme  
-- **Modular feature templates** for scalable codebase customization  
-- **Predefined npm scripts** for dev, build, lint, format, packaging, and more  
-- **Configurable window options** and auto-updater stub  
-- **Auto-generated README.md and roadmap templates**  
+- **React with Vite** for fast, modern frontend development
+- **TypeScript** strict typing across all layers
+- **Electron main & preload processes** with secure IPC
+- **ESLint & Prettier** configured for code quality and formatting
+- **Git initialization** with initial commit
+- **SQLite support** for local database integration
+- **AD/SSO stub** for enterprise authentication scaffolding
+- **Dark mode support** aligned with native OS theme
+- **Modular templates** for features like SQLite, SSO, dark mode, Prettier, and ESLint
+- **Predefined npm scripts** for dev, build, lint, format, packaging, and more
 - Fully extensible with your own custom templates and features
 
 ---
@@ -51,7 +49,7 @@ Follow the interactive wizard to configure your project. The prompts now include
 
 * Project metadata (name, author, license, description)
 * Core features (React, TypeScript, Electron, AD/SSO, SQLite, etc.)
-* Dev tooling (ESLint, Prettier, Git hooks)
+* Dev tooling (ESLint, Prettier)
 * Build and packaging scripts
 * Advanced options (window size, resizable, dark mode, custom title bar)
 
@@ -67,7 +65,7 @@ After completion, your project folder includes:
 * `package.json` - with all scripts and dependencies
 * `.prettierrc` and `.eslintrc` - code style configs
 * Modular feature files (e.g., `db.js` for SQLite)
-* Config files, README, and roadmap documents
+* Config files and README
 
 ## Adding IPC Channels
 
