@@ -31,6 +31,5 @@ export async function showSummaryReport(result) {
 
   info("\n📌 Next Steps:");
   info(`  cd ${metadata.appName}`);
-  info("  npm install");
   info("  npm run dev");
 }
