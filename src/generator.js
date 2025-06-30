@@ -49,6 +49,10 @@ export async function scaffoldProject(answers) {
       pkg.scripts[key] = fullScriptMap[key];
     }
   }
+
+  if (answers.features.includes("sqlite")) {
+    pkg.scripts["dbinit"] = fullScriptMap.dbinit;
+  }
   pkg.dependencies = dependencies;
 
   try {
