@@ -3,6 +3,10 @@
 import fs from "fs";
 import path from "path";
 
+// Directories that should never have template tokens replaced. They contain
+// generated output or third-party dependencies which must remain untouched.
+const IGNORE_DIRS = new Set(["node_modules", "dist", "build", ".git"]);
+
 /**
  * Replace {{TOKENS}} in all text files recursively.
  * @param {string} dir - Root project folder
@@ -30,6 +34,9 @@ function listAllFiles(dir) {
     const fullPath = path.join(dir, file);
     const stat = fs.statSync(fullPath);
     if (stat && stat.isDirectory()) {
+      if (IGNORE_DIRS.has(file)) {
+        return;
+      }
       results = results.concat(listAllFiles(fullPath));
     } else {
       results.push(fullPath);
