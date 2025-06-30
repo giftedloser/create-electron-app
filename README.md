@@ -33,6 +33,8 @@
 
 ### Local development
 
+Ensure you have **Node.js 18 or higher** installed.
+
 Clone the repo and link the CLI:
 
 ```bash

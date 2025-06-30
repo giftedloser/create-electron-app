@@ -102,6 +102,9 @@ export async function scaffoldProject(answers) {
   if (answers.scripts.includes("clean") || answers.scripts.includes("reset")) {
     pkg.devDependencies["rimraf"] = "^6.0.1";
   }
+  if (answers.scripts.includes("dev")) {
+    pkg.devDependencies["cross-env"] = "^7.0.3";
+  }
 
   try {
     await fs.writeFile(
