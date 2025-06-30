@@ -1,10 +1,10 @@
 {
-  "name": "create-my-electron-app",
+  "name": "create-electron-app",
   "version": "1.0.0",
   "type": "module",
   "main": "bin/index.js",
   "bin": {
-    "makeapp": "./bin/index.js"
+    "create-electron-app": "./bin/index.js"
   },
   "scripts": {
     "start": "node bin/index.js"

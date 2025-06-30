@@ -1,8 +1,8 @@
-# create-my-electron-app
+# create-electron-app
 
 ## Overview
 
-`create-my-electron-app` is a secure, modular CLI scaffolding tool designed to bootstrap modern Electron applications with React and Vite. It streamlines project setup by combining best practices for frontend, backend, and native integration, all configurable through an intuitive interactive wizard.
+`create-electron-app` is a secure, modular CLI scaffolding tool designed to bootstrap modern Electron applications with React and Vite. It streamlines project setup by combining best practices for frontend, backend, and native integration, all configurable through an intuitive interactive wizard.
 
 ---
 
@@ -30,12 +30,12 @@ Clone and install dependencies:
 
 ```bash
 git clone <your-repo-url>
-cd create-my-electron-app
+cd create-electron-app
 npm install
 npm link
 ```
 
-This makes the CLI globally available as `create-my-electron-app` (or your custom command).
+This makes the CLI globally available as `create-electron-app` (or your custom command).
 
 ---
 
@@ -44,7 +44,7 @@ This makes the CLI globally available as `create-my-electron-app` (or your custo
 Run anywhere in your terminal:
 
 ```bash
-create-my-electron-app
+create-electron-app
 ```
 
 Follow the interactive wizard to configure:

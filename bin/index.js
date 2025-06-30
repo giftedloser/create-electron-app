@@ -7,7 +7,7 @@ import { info, error as logError } from "../src/utils/logger.js";
 
 async function main() {
   try {
-    info("🛠️  create-my-electron-app CLI\n-----------------------------");
+    info("🛠️  create-electron-app CLI\n-----------------------------");
 
     const answers = await createAppWizard();
 
