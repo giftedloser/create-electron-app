@@ -50,6 +50,7 @@ export async function scaffoldProject(answers) {
     description: answers.description,
     author: answers.author,
     license: answers.license,
+    type: "module",
     scripts: {},
     dependencies: {},
   };
