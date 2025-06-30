@@ -6,7 +6,9 @@
     "strict": true,
     "esModuleInterop": true,
     "outDir": "dist",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "types": ["vite/client", "node"]
   },
   "include": ["src"]
 }

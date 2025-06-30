@@ -43,6 +43,11 @@ export async function scaffoldProject(answers) {
     electron: "^25.0.0"
   };
 
+  const devDependencies = {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
+  };
+
   const featurePackages = {
     sqlite: { dependencies: { "better-sqlite3": "^12.2.0" } },
     prettier: { devDependencies: { prettier: "^3.6.2" } },
@@ -71,6 +76,7 @@ export async function scaffoldProject(answers) {
     pkg.scripts["dbinit"] = fullScriptMap.dbinit;
   }
   pkg.dependencies = { ...dependencies };
+  Object.assign(pkg.devDependencies, devDependencies);
 
   for (const feature of answers.features) {
     const packs = featurePackages[feature];
