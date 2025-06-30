@@ -1,6 +1,6 @@
 // File: src/utils/fileOps.js
 
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import { promisify } from "util";
 import { pipeline } from "stream";
@@ -8,22 +8,24 @@ import { pipeline } from "stream";
 const streamPipeline = promisify(pipeline);
 
 export async function ensureDir(dirPath) {
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
+  try {
+    await fs.mkdir(dirPath, { recursive: true });
+  } catch (err) {
+    if (err.code !== "EEXIST") throw err;
   }
 }
 
 export async function copyDirRecursive(src, dest) {
   await ensureDir(dest);
-  for (const entry of fs.readdirSync(src)) {
-    const srcPath = path.join(src, entry);
-    const destPath = path.join(dest, entry);
-    const stat = fs.statSync(srcPath);
+  const entries = await fs.readdir(src, { withFileTypes: true });
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
 
-    if (stat.isDirectory()) {
+    if (entry.isDirectory()) {
       await copyDirRecursive(srcPath, destPath);
     } else {
-      fs.copyFileSync(srcPath, destPath);
+      await fs.copyFile(srcPath, destPath);
     }
   }
 }

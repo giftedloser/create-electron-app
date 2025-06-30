@@ -1,6 +1,6 @@
 // File: src/utils/render.js
 
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 
 // Directories that should never have template tokens replaced. They contain
@@ -13,34 +13,36 @@ const IGNORE_DIRS = new Set(["node_modules", "dist", "build", ".git"]);
  * @param {object} tokens - Key-value pairs to replace
  */
 export async function renderTemplateFiles(dir, tokens) {
-  const files = listAllFiles(dir);
+  const files = await listAllFiles(dir);
   for (const file of files) {
     const ext = path.extname(file);
     if ([".js", ".ts", ".json", ".html", ".md"].includes(ext)) {
-      let content = fs.readFileSync(file, "utf-8");
+      let content = await fs.readFile(file, "utf-8");
       for (const [key, val] of Object.entries(tokens)) {
         const pattern = new RegExp(`{{\s*${key}\s*}}`, "g");
         content = content.replace(pattern, val);
       }
-      fs.writeFileSync(file, content);
+      await fs.writeFile(file, content);
     }
   }
 }
 
-function listAllFiles(dir) {
+async function listAllFiles(dir) {
   let results = [];
-  const list = fs.readdirSync(dir);
-  list.forEach(file => {
+  const list = await fs.readdir(dir);
+  for (const file of list) {
     const fullPath = path.join(dir, file);
-    const stat = fs.statSync(fullPath);
+    const stat = await fs.stat(fullPath);
     if (stat && stat.isDirectory()) {
-      if (IGNORE_DIRS.has(file)) {
-        return;
-      }
-      results = results.concat(listAllFiles(fullPath));
+if (IGNORE_DIRS.has(file)) {
+  return;
+}
+const sub = await listAllFiles(fullPath);
+results = results.concat(sub);
+
     } else {
       results.push(fullPath);
     }
-  });
+  }
   return results;
 }
