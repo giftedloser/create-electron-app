@@ -42,6 +42,11 @@ export async function createAppWizard() {
   const answers = {};
   const totalSteps = 4;
 
+  const onCancel = () => {
+    console.log("Aborted.");
+    process.exit(1);
+  };
+
   printStepHeader(1, totalSteps, "Project Metadata");
   const meta = await prompts([
     {
@@ -76,7 +81,7 @@ export async function createAppWizard() {
       message: chalk.cyan("License:"),
       initial: "MIT",
     },
-  ]);
+  ], { onCancel });
   Object.assign(answers, meta);
   printDivider();
 
@@ -88,7 +93,7 @@ export async function createAppWizard() {
     choices: featureChoices,
     instructions: false,
     min: 1,
-  });
+  }, { onCancel });
   Object.assign(answers, featurePrompt);
   printDivider();
 
@@ -100,7 +105,7 @@ export async function createAppWizard() {
     choices: scriptOptions,
     instructions: false,
     min: 1,
-  });
+  }, { onCancel });
   Object.assign(answers, scriptPrompt);
   printDivider();
 
@@ -112,7 +117,7 @@ export async function createAppWizard() {
     name: "proceed",
     message: chalk.yellow("Proceed with project creation?"),
     initial: true,
-  });
+  }, { onCancel });
   if (!confirm.proceed) {
     console.log(chalk.red("Project creation aborted."));
     process.exit(1);
