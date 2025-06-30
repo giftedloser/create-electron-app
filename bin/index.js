@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // File: bin/index.js
 
 import { createAppWizard } from "../src/wizard.js";
