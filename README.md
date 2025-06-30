@@ -62,12 +62,24 @@ Follow the interactive wizard to configure your project. The prompts now include
 After completion, your project folder includes:
 
 * `src/` - Electron main process and frontend sources
-* `src/preload.ts` - exposes IPC-safe APIs when the preload feature is enabled
+* `src/preload.ts` - exposes IPC-safe APIs using an allowlist of channels
 * `public/` - Static assets including `index.html`
 * `package.json` - with all scripts and dependencies
 * `.prettierrc` and `.eslintrc` - code style configs
 * Modular feature files (e.g., `db.js` for SQLite)
 * Config files, README, and roadmap documents
+
+## Adding IPC Channels
+
+`src/preload.ts` contains two arrays, `allowedSendChannels` and `allowedReceiveChannels`, which control which IPC messages the renderer may use. To expose a new channel, add its name to one of these arrays:
+
+```ts
+// src/preload.ts
+const allowedSendChannels = ['toMain', 'settings:update'];
+const allowedReceiveChannels = ['fromMain', 'settings:changed'];
+```
+
+This pattern keeps the IPC surface minimal and secure.
 
 ---
 
