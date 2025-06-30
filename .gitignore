@@ -1,5 +1,16 @@
+# Dependencies
 node_modules
-*.log
+
+# System files
+.DS_Store
+
+# Environment
+.env
+
+# Build outputs
 dist/
 build/
 .cache/
+
+# Logs
+*.log
