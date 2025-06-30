@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from "electron";
+import path from "path";
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -7,7 +8,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: ${__dirname}/preload.js,
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
@@ -24,7 +25,7 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
-  if (process.platform -ne "darwin") {
+  if (process.platform !== "darwin") {
     app.quit();
   }
 });

@@ -4,15 +4,16 @@ import chalk from "chalk";
 import boxen from "boxen";
 import { featureChoices } from "./config/featureSets.js";
 import { scriptOptions } from "./config/scripts.js";
+import { info } from "./utils/logger.js";
 
 function printStepHeader(stepNum, totalSteps, title) {
-  console.log(
+  info(
     chalk.bgBlue.black(` Step ${stepNum}/${totalSteps} `) + " " + chalk.bold.underline(title) + "\n"
   );
 }
 
 function printDivider() {
-  console.log(chalk.gray("─".repeat(60)) + "\n");
+  info(chalk.gray("─".repeat(60)) + "\n");
 }
 
 function renderSummary(answers) {
@@ -35,12 +36,17 @@ ${chalk.underline("Scripts")}
 ${scriptList}
 `;
 
-  console.log(boxen(summary, { padding: 1, borderColor: "green", margin: 1 }));
+  info(boxen(summary, { padding: 1, borderColor: "green", margin: 1 }));
 }
 
 export async function createAppWizard() {
   const answers = {};
   const totalSteps = 4;
+
+  const onCancel = () => {
+    console.log("Aborted.");
+    process.exit(1);
+  };
 
   printStepHeader(1, totalSteps, "Project Metadata");
   const meta = await prompts([
@@ -76,7 +82,7 @@ export async function createAppWizard() {
       message: chalk.cyan("License:"),
       initial: "MIT",
     },
-  ]);
+  ], { onCancel });
   Object.assign(answers, meta);
   printDivider();
 
@@ -88,7 +94,7 @@ export async function createAppWizard() {
     choices: featureChoices,
     instructions: false,
     min: 1,
-  });
+  }, { onCancel });
   Object.assign(answers, featurePrompt);
   printDivider();
 
@@ -100,7 +106,7 @@ export async function createAppWizard() {
     choices: scriptOptions,
     instructions: false,
     min: 1,
-  });
+  }, { onCancel });
   Object.assign(answers, scriptPrompt);
   printDivider();
 
@@ -112,14 +118,14 @@ export async function createAppWizard() {
     name: "proceed",
     message: chalk.yellow("Proceed with project creation?"),
     initial: true,
-  });
+  }, { onCancel });
   if (!confirm.proceed) {
-    console.log(chalk.red("Project creation aborted."));
+    info(chalk.red("Project creation aborted."));
     process.exit(1);
   }
   printDivider();
 
-  console.log(chalk.green.bold("✅ Configuration confirmed. Starting scaffolding...\n"));
+  info(chalk.green.bold("✅ Configuration confirmed. Starting scaffolding...\n"));
 
   return answers;
 }
