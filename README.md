@@ -2,31 +2,40 @@
 
 ## Overview
 
-`create-electron-app` is a secure, modular CLI scaffolding tool designed to bootstrap modern Electron applications with React and Vite. It streamlines project setup by combining best practices for frontend, backend, and native integration, all configurable through an intuitive interactive wizard.
+`create-electron-app` is a secure, modular CLI that bootstraps modern Electron applications using React and Vite. The interactive wizard guides you through selecting features and scripts so you start with a ready-to-run project.
+
+---
+
+## Requirements
+
+- Node.js **18+**
+- macOS, Windows and Linux are supported
 
 ---
 
 ## Features
 
-- **React with Vite** for fast, modern frontend development
-- **TypeScript** strict typing across all layers
-- **Electron main & preload processes** with secure IPC
-- **ESLint & Prettier** configured for code quality and formatting
-- **Git initialization** with initial commit
-- **SQLite support** for local database integration
-- **AD/SSO stub** for enterprise authentication scaffolding
-- **Dark mode support** aligned with native OS theme
-- **Modular templates** for features like SQLite, SSO, dark mode, Prettier, and ESLint
-- **Predefined npm scripts** for dev, build, lint, format, packaging, and more
-- Fully extensible with your own custom templates and features
+- **React with Vite** – fast, modern frontend development
+- **TypeScript** – strict typing across all layers
+- **Electron** – main & preload processes with secure IPC
+- **ESLint & Prettier** – code quality and formatting
+- **Git initialization** – with an initial commit
+- **SQLite** – optional local database integration
+- **SSO stub** – placeholder for enterprise authentication
+- **Dark mode** – aligns with the native OS theme
+- **Packaging** – electron-builder configuration
+- **Predefined npm scripts** – dev, build, lint, format, and more
+- Fully extensible with custom templates
 
 ---
 
 ## Installation
 
+### Local development
+
 Ensure you have **Node.js 18 or higher** installed.
 
-Clone and install dependencies:
+Clone the repo and link the CLI:
 
 ```bash
 git clone <your-repo-url>
@@ -35,25 +44,40 @@ npm install
 npm link
 ```
 
-This makes the CLI globally available as `create-electron-app` (or your custom command).
+`npm link` makes the command available globally for testing.
+
+### Global install (after publish)
+
+```bash
+npm install -g create-electron-app
+```
+
+Then run `create-electron-app` from any folder.
 
 ---
 
 ## Usage
 
-Run anywhere in your terminal:
+Run the CLI from any folder:
 
 ```bash
-create-electron-app
+create-electron-app my-app
 ```
 
-Follow the interactive wizard to configure your project. The prompts now include helpful descriptions and step numbers so you always know where you are:
+Example options:
 
-* Project metadata (name, author, license, description)
-* Core features (React, TypeScript, Electron, AD/SSO, SQLite, etc.)
-* Dev tooling (ESLint, Prettier)
-* Build and packaging scripts
-* Advanced options (window size, resizable, dark mode, custom title bar)
+```bash
+create-electron-app my-app --help
+create-electron-app my-app
+```
+
+The wizard walks you through:
+
+- Project metadata (name, author, license, description)
+- Core features (React, TypeScript, Preload, SQLite, SSO, dark mode)
+- Dev tooling (ESLint, Prettier)
+- Packaging scripts
+- Window and UI options
 
 ---
 
@@ -69,6 +93,21 @@ After completion, your project folder includes:
 * `.prettierrc` and `.eslintrc` - code style configs
 * Modular feature files (e.g., `db.js` for SQLite)
 * Config files and README
+
+## Dev Scripts
+
+The generated `package.json` includes helpful commands:
+
+```bash
+npm run dev     # Start Vite and Electron in watch mode
+npm run build   # TypeScript compile and Vite build
+npm run dist    # Package installers via electron-builder
+npm run lint    # Run ESLint
+npm run format  # Run Prettier
+npm run reset   # Remove node_modules and reinstall
+npm run db:init # Initialize the SQLite database
+npm run start   # Launch the compiled app
+```
 
 ## Adding IPC Channels
 
@@ -86,15 +125,23 @@ This pattern keeps the IPC surface minimal and secure.
 
 ## Packaging
 
-To create distributable installers for your application, run the packaged `dist`
-script:
+Packaging is handled by [electron-builder](https://www.electron.build/).
 
-```bash
-npm run dist
-```
+1. Run `npm run build` to generate production files.
+2. Execute `npm run dist` to invoke electron-builder.
+3. Installers for your OS appear under the `dist/` folder.
 
-This executes `electron-builder` using the `electron-builder.yml` file generated
-at the project root. The resulting output is placed in the `dist/` directory.
+The build uses `electron-builder.yml` at the project root to define targets. You
+can tweak this file before running the `dist` script.
+
+---
+
+## Troubleshooting
+
+- **Dependency conflicts** – delete `node_modules` and run `npm install`.
+- **Windows path issues** – ensure long paths are enabled and run the terminal as Administrator.
+- **electron-builder failures** – try clearing the `dist/` folder and check code-sign settings.
+- **Scripts not found** – verify you ran `npm link` or installed globally.
 
 ---
 

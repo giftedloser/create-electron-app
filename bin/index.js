@@ -2,6 +2,9 @@
 // File: bin/index.js
 
 import gradient from "gradient-string";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import path from "path";
 import { createAppWizard } from "../src/wizard.js";
 import { scaffoldProject } from "../src/generator.js";
 import { showSummaryReport } from "../src/report.js";
@@ -18,6 +21,22 @@ _/ ___\\_  __ \\_/ __ \\__  \\   __\\/ __ \\   ______ _/ __ \\|  | _/ __ \\_/ __
 
 console.clear();
 console.log(gradient.rainbow.multiline(title));
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json"), "utf8"));
+
+const args = process.argv.slice(2);
+if (args.includes("-v") || args.includes("--version")) {
+  console.log(`v${pkg.version}`);
+  process.exit(0);
+}
+if (args.includes("-h") || args.includes("--help")) {
+  console.log("Usage: create-electron-app [options]\n" +
+    "Run without options to start the interactive wizard.\n" +
+    "  -h, --help     Show this help\n" +
+    "  -v, --version  Show CLI version");
+  process.exit(0);
+}
 
 async function main() {
   try {

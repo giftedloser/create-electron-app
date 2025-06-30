@@ -1,5 +1,3 @@
-
-
 ## 🛠 `create-electron-app` CLI Tool — Architecture & Flow (Electron + React + Vite Generator)
 
 ### 🔰 CLI OVERVIEW
@@ -178,5 +176,32 @@ If anything breaks, likely reasons:
 * Vite config misalignment (ensure TS and JSX support)
 * Incomplete TypeScript build (`tsc` must emit `dist/index.js`)
 * Wrong preload path or missing script
+
+---
+
+## 🗺️ Repository Layout
+
+```
+makeapp/
+├── bin/               # CLI entrypoint
+├── src/               # Wizard, generator, and utilities
+├── templates/         # Base and feature templates
+├── README.md          # User docs
+└── AGENTS.md          # Maintainer notes (this file)
+```
+
+Generated apps follow a similar structure under `<appName>/` as detailed above in *Project Structure Generated*.
+
+### Token Replacement Logic
+
+Template files may contain tokens such as `{{APP_NAME}}` or `{{WINDOW_TITLE}}`. The `renderTemplateFiles` utility replaces these tokens in `.js`, `.ts`, `.json`, `.html`, `.md`, `.yml`, and `.yaml` files, while ignoring `node_modules`, `dist`, `build`, and `.git` directories.
+
+### Extending with New Features
+
+1. Add a folder under `templates/with-<feature>` containing the template files.
+2. Add an entry in `src/config/featureSets.js` describing the feature.
+3. Declare any extra dependencies in `src/generator.js` within `featurePackages`.
+
+The generator will automatically copy the template folder, install declared packages, and inject tokens.
 
 
