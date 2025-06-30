@@ -83,6 +83,14 @@ export async function scaffoldProject(answers) {
     }
   }
 
+  // Script-specific dev dependencies
+  if (answers.scripts.includes("dist")) {
+    pkg.devDependencies["electron-builder"] = "^26.0.0";
+  }
+  if (answers.scripts.includes("clean") || answers.scripts.includes("reset")) {
+    pkg.devDependencies["rimraf"] = "^6.0.1";
+  }
+
   try {
     await fs.writeFile(
       path.join(outDir, "package.json"),
@@ -157,6 +165,17 @@ export async function scaffoldProject(answers) {
       await copyDirRecursive(featureTemplateDir, outDir);
     } catch {
       // No template for feature; silently continue
+    }
+  }
+
+  // Include electron-builder config if dist script selected
+  if (answers.scripts.includes("dist")) {
+    const builderTemplate = path.resolve(__dirname, "../templates/with-dist");
+    try {
+      await fs.access(builderTemplate);
+      await copyDirRecursive(builderTemplate, outDir);
+    } catch {
+      // ignore if template missing
     }
   }
 
