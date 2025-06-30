@@ -124,6 +124,14 @@ Contributions and issues welcome! Please:
 * Integrate CI/CD pipeline templates
 * Add internationalization and localization support
 
+
+## Changelog
+
+This project maintains a `CHANGELOG.md` following the [Keep a Changelog](https://keepachangelog.com/). When preparing a new release:
+1. Add notes about the changes under an `Unreleased` heading.
+2. Move those notes to a new version section with the release date.
+3. Commit the updated changelog as part of the release PR.
+
 ---
 
 ## License
