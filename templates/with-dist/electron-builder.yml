@@ -1,0 +1,6 @@
+appId: com.example.{{APP_NAME}}
+productName: {{APP_NAME}}
+files:
+  - dist/**
+  - node_modules/**
+  - package.json
