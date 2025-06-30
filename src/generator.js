@@ -51,7 +51,13 @@ export async function scaffoldProject(answers) {
   const featurePackages = {
     sqlite: { dependencies: { "better-sqlite3": "^12.2.0" } },
     prettier: { devDependencies: { prettier: "^3.6.2" } },
-    eslint: { devDependencies: { eslint: "^9.30.0" } },
+    eslint: {
+      devDependencies: {
+        eslint: "^9.30.0",
+        "@typescript-eslint/parser": "^7.0.0",
+        "@typescript-eslint/eslint-plugin": "^7.0.0",
+      },
+    },
   };
 
   // Build package.json with selected scripts and dependencies
