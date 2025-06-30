@@ -21,5 +21,5 @@ export const fullScriptMap = {
   format: "prettier --write .",
   reset: "rimraf node_modules && npm install",
   dbinit: "node scripts/init-db.js",
-  start: "node dist/index.js"
+  start: "node dist/main.js"
 };
