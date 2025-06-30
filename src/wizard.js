@@ -6,10 +6,15 @@ import { featureChoices } from "./config/featureSets.js";
 import { scriptOptions } from "./config/scripts.js";
 import { info } from "./utils/logger.js";
 
+function printWelcome() {
+  const msg = `${chalk.bold("create-my-electron-app")}\nA friendly wizard to scaffold your Electron project.`;
+  info(boxen(msg, { padding: 1, borderColor: "cyan", margin: 1 }));
+  info(chalk.gray("Use arrow keys to navigate, space to select, enter to confirm.\n"));
+}
+
 function printStepHeader(stepNum, totalSteps, title) {
-  info(
-    chalk.bgBlue.black(` Step ${stepNum}/${totalSteps} `) + " " + chalk.bold.underline(title) + "\n"
-  );
+  const header = chalk.bgBlue.black(` Step ${stepNum}/${totalSteps} `) + " " + chalk.bold(title);
+  info(boxen(header, { padding: 0, borderColor: "blue", margin: 1 }));
 }
 
 function printDivider() {
@@ -47,6 +52,8 @@ export async function createAppWizard() {
     console.log("Aborted.");
     process.exit(1);
   };
+
+  printWelcome();
 
   printStepHeader(1, totalSteps, "Project Metadata");
   const meta = await prompts([
@@ -92,7 +99,7 @@ export async function createAppWizard() {
     name: "features",
     message: chalk.cyan("Select core features:"),
     choices: featureChoices,
-    instructions: false,
+    instructions: "Use space to select and enter to continue",
     min: 1,
   }, { onCancel });
   Object.assign(answers, featurePrompt);
@@ -104,7 +111,7 @@ export async function createAppWizard() {
     name: "scripts",
     message: chalk.cyan("Select dev scripts to include:"),
     choices: scriptOptions,
-    instructions: false,
+    instructions: "Toggle scripts with space. Enter to confirm",
     min: 1,
   }, { onCancel });
   Object.assign(answers, scriptPrompt);

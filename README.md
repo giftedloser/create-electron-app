@@ -47,7 +47,7 @@ Run anywhere in your terminal:
 create-my-electron-app
 ```
 
-Follow the interactive wizard to configure:
+Follow the interactive wizard to configure your project. The prompts now include helpful descriptions and step numbers so you always know where you are:
 
 * Project metadata (name, author, license, description)
 * Core features (React, TypeScript, Electron, AD/SSO, SQLite, etc.)
