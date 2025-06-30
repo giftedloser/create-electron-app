@@ -13,6 +13,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export async function scaffoldProject(answers) {
   const outDir = path.resolve(process.cwd(), answers.appName);
 
+  // helper to remove the project directory on failure
+  const cleanupProject = async () => {
+    try {
+      await fs.rm(outDir, { recursive: true, force: true });
+    } catch (err) {
+      warn(`Failed to clean up '${outDir}': ${err.message}`);
+    }
+  };
+
   // Prevent overwriting non-empty existing folder
   try {
     await ensureDir(outDir);
@@ -62,6 +71,7 @@ export async function scaffoldProject(answers) {
       "utf8"
     );
   } catch (e) {
+    await cleanupProject();
     throw new Error(`Failed to write package.json: ${e.message}`);
   }
 
@@ -70,6 +80,7 @@ export async function scaffoldProject(answers) {
   try {
     await copyDirRecursive(baseTemplateDir, outDir);
   } catch (e) {
+    await cleanupProject();
     throw new Error(`Failed copying base templates: ${e.message}`);
   }
 
@@ -107,6 +118,7 @@ export async function scaffoldProject(answers) {
       LICENSE: answers.license,
     });
   } catch (e) {
+    await cleanupProject();
     throw new Error(`Template token rendering failed: ${e.message}`);
   }
 
@@ -115,7 +127,8 @@ export async function scaffoldProject(answers) {
     info("🔧 Installing dependencies...");
     await execa("npm", ["install"], { cwd: outDir, stdio: "inherit" });
   } catch (e) {
-    throw new Error(`npm install failed: ${e.message}`);
+    await cleanupProject();
+    throw new Error(`npm install failed: ${e.message}. Project directory cleaned up.`);
   }
 
   // Initialize Git repo if selected
@@ -126,7 +139,12 @@ export async function scaffoldProject(answers) {
       await execa("git", ["add", "."], { cwd: outDir });
       await execa("git", ["commit", "-m", "Initial scaffold commit"], { cwd: outDir });
     } catch (e) {
-      warn(`Git initialization failed: ${e.message}`);
+      // remove .git to avoid half-baked repo
+      try {
+        await fs.rm(path.join(outDir, ".git"), { recursive: true, force: true });
+      } catch {}
+      await cleanupProject();
+      throw new Error(`Git initialization failed: ${e.message}. Cleaned up project directory.`);
     }
   }
 
