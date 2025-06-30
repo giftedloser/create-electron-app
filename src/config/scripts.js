@@ -13,7 +13,7 @@ export const scriptOptions = [
 ];
 
 export const fullScriptMap = {
-  dev: "vite --config vite.config.js && electron .",
+  dev: "NODE_ENV=development vite --config vite.config.js && NODE_ENV=development electron .",
   build: "tsc && vite build",
   dist: "electron-builder",
   clean: "rimraf dist build .cache",
