@@ -115,11 +115,14 @@ export async function scaffoldProject(answers) {
 
   // Copy feature templates conditionally
   for (const feature of answers.features) {
-    if (feature === "prettier" || feature === "git") {
-      // skip features that don't have templates or are handled separately
+    if (feature === "git") {
+      // skip features handled separately
       continue;
     }
-    const featureTemplateDir = path.resolve(__dirname, `../templates/with-${feature}`);
+    const featureTemplateDir = path.resolve(
+      __dirname,
+      `../templates/with-${feature}`
+    );
     try {
       await fs.access(featureTemplateDir);
       await copyDirRecursive(featureTemplateDir, outDir);
