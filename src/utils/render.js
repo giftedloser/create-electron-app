@@ -31,15 +31,16 @@ async function listAllFiles(dir) {
   let results = [];
   const list = await fs.readdir(dir);
   for (const file of list) {
+    if (IGNORE_DIRS.has(file)) {
+      continue;
+    }
+
     const fullPath = path.join(dir, file);
     const stat = await fs.stat(fullPath);
-    if (stat && stat.isDirectory()) {
-if (IGNORE_DIRS.has(file)) {
-  return;
-}
-const sub = await listAllFiles(fullPath);
-results = results.concat(sub);
 
+    if (stat && stat.isDirectory()) {
+      const sub = await listAllFiles(fullPath);
+      results = results.concat(sub);
     } else {
       results.push(fullPath);
     }
