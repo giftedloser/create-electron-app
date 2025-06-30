@@ -2,19 +2,8 @@ export const featureChoices = [
   { title: "React (via Vite)", value: "react", selected: true },
   { title: "TypeScript", value: "typescript", selected: true },
   { title: "Electron", value: "electron", selected: true },
-  { title: "Preload (secure IPC)", value: "preload", selected: true },
-  { title: "ESLint", value: "eslint", selected: true },
-  { title: "Prettier", value: "prettier", selected: true },
   { title: "Git Init", value: "git", selected: true },
   { title: "SQLite Support", value: "sqlite" },
-  { title: "Zod or Joi Validation", value: "validation" },
-  { title: "Dotenv Support", value: "dotenv" },
-  { title: "Git Hooks (Husky)", value: "husky" },
-  { title: "Auto-generated README.md", value: "readme" },
   { title: "AD/SSO Login Stub", value: "sso" },
-  { title: "Roadmap.md + Agents.md", value: "agents" },
-  { title: "Dark Mode Support", value: "darkmode", selected: true },
-  { title: "Transparent Custom Window Bar", value: "frameless" },
-  { title: "Global App Config File", value: "metaConfig" },
-  { title: "Auto-Updater Stub", value: "autoupdate" }
+  { title: "Dark Mode Support", value: "darkmode", selected: true }
 ];

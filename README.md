@@ -8,18 +8,15 @@
 
 ## Features
 
-- **React with Vite** for fast, modern frontend development  
-- **TypeScript** strict typing across all layers  
-- **Electron main & preload processes** with secure IPC  
-- **ESLint & Prettier** configured for code quality and formatting  
-- **Git initialization** with initial commit  
-- **SQLite support** for local database integration  
-- **AD/SSO stub** for enterprise authentication scaffolding  
-- **Dark mode support** aligned with native OS theme  
-- **Modular feature templates** for scalable codebase customization  
-- **Predefined npm scripts** for dev, build, lint, format, packaging, and more  
-- **Configurable window options** and auto-updater stub  
-- **Auto-generated README.md and roadmap templates**  
+- **React with Vite** for fast, modern frontend development
+- **TypeScript** strict typing across all layers
+- **Electron** main process scaffolding
+- **Git initialization** with initial commit
+- **SQLite support** for local database integration
+- **AD/SSO stub** for enterprise authentication scaffolding
+- **Dark mode support** aligned with native OS theme
+- **Modular feature templates** for scalable codebase customization
+- **Predefined npm scripts** for dev, build, lint, format, packaging, and more
 - Fully extensible with your own custom templates and features
 
 ---
@@ -50,10 +47,9 @@ create-my-electron-app
 Follow the interactive wizard to configure:
 
 * Project metadata (name, author, license, description)
-* Core features (React, TypeScript, Electron, AD/SSO, SQLite, etc.)
-* Dev tooling (ESLint, Prettier, Git hooks)
+* Core features (React, TypeScript, Electron, Git init, SQLite, SSO, Dark mode)
 * Build and packaging scripts
-* Advanced options (window size, resizable, dark mode, custom title bar)
+* Dark mode toggle option
 
 ---
 
@@ -64,9 +60,8 @@ After completion, your project folder includes:
 * `src/` - Electron main process and frontend sources
 * `public/` - Static assets including `index.html`
 * `package.json` - with all scripts and dependencies
-* `.prettierrc` and `.eslintrc` - code style configs
-* Modular feature files (e.g., `db.js` for SQLite)
-* Config files, README, and roadmap documents
+* Modular feature files (e.g., `db.js` for SQLite and `auth.js` for SSO)
+* A basic `README.md` file
 
 ---
 
