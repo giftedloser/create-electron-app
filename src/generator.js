@@ -105,11 +105,40 @@ export async function scaffoldProject(answers) {
 
   // Include preload script only if feature selected
   const preloadFile = path.join(outDir, "src", "preload.ts");
+  const mainFile = path.join(outDir, "src", "main.ts");
   if (!answers.features.includes("preload")) {
     try {
       await fs.rm(preloadFile, { force: true });
     } catch {
-      // ignore
+      // ignore if file does not exist
+    }
+
+    // Remove preload property from BrowserWindow options
+    try {
+      let mainContent = await fs.readFile(mainFile, "utf8");
+      const lines = mainContent.split(/\r?\n/);
+      const idx = lines.findIndex((l) => l.includes("preload"));
+      if (idx !== -1) {
+        lines.splice(idx, 1);
+        if (idx - 1 >= 0) {
+          lines[idx - 1] = lines[idx - 1].replace(/,\s*$/, "");
+        }
+      }
+      // Remove import path line if unused
+      const pathImportIdx = lines.findIndex((l) =>
+        /^import\s+path\s+from\s+["']path["']/.test(l)
+      );
+      if (pathImportIdx !== -1) {
+        const stillUsesPath = lines.some(
+          (l, i) => i !== pathImportIdx && l.includes("path.")
+        );
+        if (!stillUsesPath) {
+          lines.splice(pathImportIdx, 1);
+        }
+      }
+      await fs.writeFile(mainFile, lines.join("\n"));
+    } catch {
+      // ignore modification errors
     }
   }
 
