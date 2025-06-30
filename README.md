@@ -65,6 +65,7 @@ After completion, your project folder includes:
 * `src/preload.ts` - exposes IPC-safe APIs using an allowlist of channels
 * `public/` - Static assets including `index.html`
 * `package.json` - with all scripts and dependencies
+* `.gitignore` - standard ignores like `node_modules/` and `dist/`
 * `.prettierrc` and `.eslintrc` - code style configs
 * Modular feature files (e.g., `db.js` for SQLite)
 * Config files, README, and roadmap documents
