@@ -1,25 +1,39 @@
 // File: src/generator.js
-
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import { fullScriptMap } from "./config/scripts.js";
-import { renderTemplateFiles } from "./utils/render.js";
 import { copyDirRecursive, ensureDir } from "./utils/fileOps.js";
+import { renderTemplateFiles } from "./utils/render.js";
 import { execa } from "execa";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export async function scaffoldProject(answers) {
   const outDir = path.resolve(process.cwd(), answers.appName);
-  await ensureDir(outDir);
 
-  // Validate appName folder does not already exist to prevent overwrite
-  if (fs.existsSync(outDir) && fs.readdirSync(outDir).length > 0) {
-    throw new Error(`Target directory '${outDir}' already exists and is not empty.`);
+  // Prevent overwriting non-empty existing folder
+  try {
+    await ensureDir(outDir);
+  } catch (e) {
+    throw new Error(`Failed to ensure project directory: ${e.message}`);
   }
 
-  // Generate package.json
+  const filesInDir = await fs.readdir(outDir);
+  if (filesInDir.length > 0) {
+    throw new Error(`Target directory '${outDir}' exists and is not empty.`);
+  }
+
+  // Define required dependencies explicitly
+  const dependencies = {
+    vite: "^4.0.0",
+    "@vitejs/plugin-react": "^3.0.0",
+    react: "^18.0.0",
+    "react-dom": "^18.0.0",
+    electron: "^25.0.0"
+  };
+
+  // Build package.json with selected scripts and dependencies
   const pkg = {
     name: answers.appName,
     version: "0.1.0",
@@ -27,52 +41,78 @@ export async function scaffoldProject(answers) {
     author: answers.author,
     license: answers.license,
     scripts: {},
+    dependencies: {},
   };
-
   for (const key of answers.scripts) {
     if (fullScriptMap[key]) {
       pkg.scripts[key] = fullScriptMap[key];
     }
   }
+  pkg.dependencies = dependencies;
 
-  fs.writeFileSync(path.join(outDir, "package.json"), JSON.stringify(pkg, null, 2));
+  try {
+    await fs.writeFile(
+      path.join(outDir, "package.json"),
+      JSON.stringify(pkg, null, 2),
+      "utf8"
+    );
+  } catch (e) {
+    throw new Error(`Failed to write package.json: ${e.message}`);
+  }
 
-  // Always copy base + prettier + darkmode templates
-  const alwaysCopy = ["base", "with-prettier", "with-darkmode"];
-  for (const folder of alwaysCopy) {
-    const srcPath = path.resolve(__dirname, `../templates/${folder}`);
-    if (fs.existsSync(srcPath)) {
-      await copyDirRecursive(srcPath, outDir);
+  // Copy base template always
+  const baseTemplateDir = path.resolve(__dirname, "../templates/base");
+  try {
+    await copyDirRecursive(baseTemplateDir, outDir);
+  } catch (e) {
+    throw new Error(`Failed copying base templates: ${e.message}`);
+  }
+
+  // Copy feature templates conditionally
+  for (const feature of answers.features) {
+    if (feature === "prettier" || feature === "darkmode" || feature === "git") {
+      // skip features that don't have templates or are handled separately
+      continue;
+    }
+    const featureTemplateDir = path.resolve(__dirname, `../templates/with-${feature}`);
+    try {
+      await fs.access(featureTemplateDir);
+      await copyDirRecursive(featureTemplateDir, outDir);
+    } catch {
+      // No template for feature; silently continue
     }
   }
 
-  // Conditionally copy user selected features (excluding prettier, darkmode)
-  const optionalFeatures = answers.features.filter(f => !alwaysCopy.includes(`with-${f}`));
-  for (const feature of optionalFeatures) {
-    const srcPath = path.resolve(__dirname, `../templates/with-${feature}`);
-    if (fs.existsSync(srcPath)) {
-      await copyDirRecursive(srcPath, outDir);
-    }
+  // Inject tokens (appName, title, author, license) into templates
+  try {
+    await renderTemplateFiles(outDir, {
+      APP_NAME: answers.appName,
+      WINDOW_TITLE: answers.title,
+      AUTHOR: answers.author,
+      LICENSE: answers.license,
+    });
+  } catch (e) {
+    throw new Error(`Template token rendering failed: ${e.message}`);
   }
 
-  // Inject tokens into copied files
-  await renderTemplateFiles(outDir, {
-    APP_NAME: answers.appName,
-    WINDOW_TITLE: answers.title,
-    AUTHOR: answers.author,
-    LICENSE: answers.license,
-  });
+  // Install dependencies
+  try {
+    console.log("🔧 Installing dependencies...");
+    await execa("npm", ["install"], { cwd: outDir, stdio: "inherit" });
+  } catch (e) {
+    throw new Error(`npm install failed: ${e.message}`);
+  }
 
-  // Run npm install
-  console.log("\n🔧 Installing dependencies...");
-  await execa("npm", ["install"], { cwd: outDir, stdio: "inherit" });
-
-  // Initialize git if selected
+  // Initialize Git repo if selected
   if (answers.features.includes("git")) {
-    console.log("\n🔧 Initializing Git repository...");
-    await execa("git", ["init"], { cwd: outDir });
-    await execa("git", ["add", "."], { cwd: outDir });
-    await execa("git", ["commit", "-m", "Initial scaffold commit"], { cwd: outDir });
+    try {
+      console.log("🔧 Initializing Git repository...");
+      await execa("git", ["init"], { cwd: outDir });
+      await execa("git", ["add", "."], { cwd: outDir });
+      await execa("git", ["commit", "-m", "Initial scaffold commit"], { cwd: outDir });
+    } catch (e) {
+      console.warn(`Git initialization failed: ${e.message}`);
+    }
   }
 
   return {
