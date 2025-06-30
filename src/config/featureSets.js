@@ -1,7 +1,25 @@
 export const featureChoices = [
-  { title: "React (via Vite)", value: "react", selected: true, description: "Modern React setup" },
-  { title: "TypeScript", value: "typescript", selected: true, description: "Type safety" },
-  { title: "Electron", value: "electron", selected: true, description: "Desktop shell" },
+  {
+    title: "React (via Vite)",
+    value: "react",
+    selected: true,
+    disabled: true,
+    description: "Modern React setup",
+  },
+  {
+    title: "TypeScript",
+    value: "typescript",
+    selected: true,
+    disabled: true,
+    description: "Type safety",
+  },
+  {
+    title: "Electron",
+    value: "electron",
+    selected: true,
+    disabled: true,
+    description: "Desktop shell",
+  },
   { title: "Preload (secure IPC)", value: "preload", selected: true, description: "Expose safe APIs" },
   { title: "ESLint", value: "eslint", selected: true, description: "Linting rules" },
   { title: "Prettier", value: "prettier", selected: true, description: "Code formatter" },
