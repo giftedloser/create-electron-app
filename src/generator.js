@@ -70,7 +70,7 @@ export async function scaffoldProject(answers) {
 
   // Copy feature templates conditionally
   for (const feature of answers.features) {
-    if (feature === "prettier" || feature === "darkmode" || feature === "git") {
+    if (feature === "prettier" || feature === "git") {
       // skip features that don't have templates or are handled separately
       continue;
     }
