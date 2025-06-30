@@ -43,6 +43,12 @@ export async function scaffoldProject(answers) {
     electron: "^25.0.0"
   };
 
+  const featurePackages = {
+    sqlite: { dependencies: { "better-sqlite3": "^12.2.0" } },
+    prettier: { devDependencies: { prettier: "^3.6.2" } },
+    eslint: { devDependencies: { eslint: "^9.30.0" } },
+  };
+
   // Build package.json with selected scripts and dependencies
   const pkg = {
     name: answers.appName,
@@ -52,6 +58,7 @@ export async function scaffoldProject(answers) {
     license: answers.license,
     scripts: {},
     dependencies: {},
+    devDependencies: {},
   };
   for (const key of answers.scripts) {
     if (fullScriptMap[key]) {
@@ -62,7 +69,18 @@ export async function scaffoldProject(answers) {
   if (answers.features.includes("sqlite")) {
     pkg.scripts["dbinit"] = fullScriptMap.dbinit;
   }
-  pkg.dependencies = dependencies;
+  pkg.dependencies = { ...dependencies };
+
+  for (const feature of answers.features) {
+    const packs = featurePackages[feature];
+    if (!packs) continue;
+    if (packs.dependencies) {
+      Object.assign(pkg.dependencies, packs.dependencies);
+    }
+    if (packs.devDependencies) {
+      Object.assign(pkg.devDependencies, packs.devDependencies);
+    }
+  }
 
   try {
     await fs.writeFile(
