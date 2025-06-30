@@ -24,6 +24,8 @@
 
 ## Installation
 
+Ensure you have **Node.js 18 or higher** installed.
+
 Clone and install dependencies:
 
 ```bash
