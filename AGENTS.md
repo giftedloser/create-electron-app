@@ -188,6 +188,4 @@ If anything breaks, likely reasons:
 * Incomplete TypeScript build (`tsc` must emit `dist/index.js`)
 * Wrong preload path or missing script
 
----
 
-Let Claude or any other system use this as literal system-state baseline. No inference. No filler. Total fidelity. Let me know if you want a bundled ZIP structure audit, template listing, or to codify any part in automation script form.
