@@ -1,12 +1,12 @@
 
 
-## 🛠 `makeapp` CLI Tool — Architecture & Flow (Electron + React + Vite Generator)
+## 🛠 `create-electron-app` CLI Tool — Architecture & Flow (Electron + React + Vite Generator)
 
 ### 🔰 CLI OVERVIEW
 
-* CLI Name: `makeapp` (global binary installed via `bin/index.js`)
+* CLI Name: `create-electron-app` (global binary installed via `bin/index.js`)
 * Tech: Node.js (ESM), `enquirer` for prompts, modular scaffold logic
-* Run anywhere from terminal: `makeapp`
+* Run anywhere from terminal: `create-electron-app`
 * Generates fully working Electron app (Vite+React+TS) into CWD
 * Output folder: `${cwd}/${appName}`
 
@@ -173,8 +173,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
 
 If you're handing this to Claude or another dev:
 
-1. Ensure `makeapp` CLI is global (`npm link` or installed via symlink)
-2. Run `makeapp` and test every selected feature path.
+1. Ensure `create-electron-app` CLI is global (`npm link` or installed via symlink)
+2. Run `create-electron-app` and test every selected feature path.
 3. `npm run dev` for live mode
 4. `npm run build` → generates `dist/index.js`
 5. `npm run start` for production mode
