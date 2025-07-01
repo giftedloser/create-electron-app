@@ -27,5 +27,6 @@ export const featureChoices = [
   { title: "SQLite Support", value: "sqlite", description: "Local database" },
   { title: "AD/SSO Login Stub", value: "sso", description: "Placeholder auth" },
   { title: "Dark Mode Support", value: "darkmode", selected: true, description: "OS theme detection" },
+  { title: "Frameless Window", value: "frameless", description: "Custom title bar" },
   
 ];
