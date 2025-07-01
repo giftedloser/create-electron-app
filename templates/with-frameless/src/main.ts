@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { fileURLToPath } from "url";
+{{DARKMODE_IMPORT}}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

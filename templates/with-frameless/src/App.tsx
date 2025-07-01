@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import WindowControls from './components/WindowControls';
 
 export default function App() {
+  useEffect(() => {
+    window.api?.on('darkmode-updated', (isDark: boolean) => {
+      console.log('dark mode changed', isDark);
+    });
+  }, []);
   return (
     <>
       <WindowControls />

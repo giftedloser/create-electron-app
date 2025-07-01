@@ -170,7 +170,7 @@ export async function scaffoldProject(answers) {
 
   // Copy feature templates conditionally
   for (const feature of answers.features) {
-    if (feature === "git") {
+    if (feature === "git" || feature === "darkmode") {
       // skip features handled separately
       continue;
     }
@@ -186,16 +186,33 @@ export async function scaffoldProject(answers) {
     }
   }
 
-  // If SSO is enabled, import the auth helper in the main process
-  if (answers.features.includes("sso")) {
-    try {
-      let mainContent = await fs.readFile(mainFile, "utf8");
-      const lines = mainContent.split(/\r?\n/);
-      const lastImport = lines.reduce((idx, line, i) => (/^import\s/.test(line) ? i : idx), -1);
-      lines.splice(lastImport + 1, 0, "import '../auth.js';");
-      await fs.writeFile(mainFile, lines.join("\n"));
-    } catch {
-      // ignore file modification errors
+// Conditionally inject main process imports for selected features
+const extraImports = [];
+
+if (answers.features.includes("darkmode")) {
+  extraImports.push("./darkmode.js");
+}
+
+if (answers.features.includes("sso")) {
+  extraImports.push("./auth.js");
+}
+
+if (extraImports.length > 0) {
+  try {
+    let mainContent = await fs.readFile(mainFile, "utf8");
+    const lines = mainContent.split(/\r?\n/);
+    let insertIdx = lines.findIndex((l) => !/^import /.test(l));
+    if (insertIdx === -1) insertIdx = lines.length;
+    for (const imp of extraImports) {
+      lines.splice(insertIdx, 0, `import '${imp}';`);
+      insertIdx++;
+    }
+    await fs.writeFile(mainFile, lines.join("\n"));
+  } catch {
+    // ignore file modification errors
+  }
+}
+
     }
   }
 
@@ -212,13 +229,17 @@ export async function scaffoldProject(answers) {
 
   // Inject tokens (appName, title, author, license) into templates
   try {
-    await renderTemplateFiles(outDir, {
+    const tokens = {
       APP_NAME: answers.appName,
       WINDOW_TITLE: answers.title,
       AUTHOR: answers.author,
       LICENSE: answers.license,
       FRAMELESS: answers.features.includes("frameless") ? "true" : "false",
-    });
+      DARKMODE_IMPORT: answers.features.includes("darkmode")
+        ? "import './darkmode.js';"
+        : "",
+    };
+    await renderTemplateFiles(outDir, tokens);
   } catch (e) {
     await cleanupProject();
     throw new Error(`Template token rendering failed: ${e.message}`);
