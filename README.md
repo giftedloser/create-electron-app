@@ -1,11 +1,54 @@
 # create-electron-app
 
-Interactive CLI to scaffold modular, secure Electron + React + Vite applications with professional, production-ready defaults.
+## What is `create-electron-app`?
+
+`create-electron-app` is a CLI scaffolding utility designed for engineering teams and developers to rapidly generate Electron + React + Vite applications with modular, production-grade features.
+
+It enables users to scaffold secure, scalable, and maintainable cross-platform desktop apps using a guided CLI wizard or scripted execution. The generated codebase is cleanly structured and follows enterprise-level standards out of the box.
 
 ---
 
-## Overview
-`create-electron-app` is a secure, modular CLI that bootstraps modern Electron applications using React and Vite. The interactive wizard guides you through selecting features and scripts so you start with a ready-to-run project.
+## Capabilities
+
+- ✅ Interactive CLI wizard or fully scripted automation
+- ✅ Modular feature toggles (Preload, Frameless, Dark Mode, SQLite, ESLint, etc.)
+- ✅ Vite + React frontend with live HMR
+- ✅ Electron main process with secure preload bridge (optional)
+- ✅ TypeScript-first architecture with allowJs fallback
+- ✅ Pre-configured ESLint, Prettier, and packaging (electron-builder)
+- ✅ Intelligent feature interop: e.g., Preload auto-included for Dark Mode/Frameless
+- ✅ Git init, metadata, and clean dependency graph
+- ✅ One-command bootstrap: zero manual steps post-gen
+
+---
+
+## Mandatory Features
+
+- `base`: always included (main, renderer, preload.ts stub, Vite config, etc.)
+
+## Optional Feature Flags
+
+| Feature      | Description                                       |
+|--------------|---------------------------------------------------|
+| `preload`    | Secure IPC bridge + global API exposure           |
+| `darkmode`   | Runtime dark mode theme engine (requires preload) |
+| `frameless`  | Custom titlebar and draggable controls            |
+| `sqlite`     | Embedded SQLite access via `better-sqlite3`       |
+| `eslint`     | Linter with recommended rules                     |
+| `prettier`   | Formatter with opinionated defaults               |
+| `dist`       | electron-builder config for packaging             |
+
+---
+
+## CLI Syntax Summary
+
+```sh
+npm create electron-app@latest
+npx create-electron-app
+create-electron-app (after global install)
+```
+
+For advanced usage, see [CLI Documentation](./docs/cli.md)
 
 ---
 
@@ -154,7 +197,6 @@ SSO_REDIRECT_URI (default: http://localhost:4280/callback)
 npm run build
 npm run dist
 ```
-
 Uses `electron-builder.yml`. Output appears in `dist/`.
 
 ---
