@@ -117,6 +117,7 @@ npm run build   # TypeScript compile and Vite build
 npm run dist    # Package installers via electron-builder
 npm run lint    # Run ESLint
 npm run format  # Run Prettier
+npm test        # Run Node.js tests
 npm run reset   # Remove node_modules and reinstall
 npm run dbinit # Initialize the SQLite database (if included)
 npm run start   # Launch the compiled app
