@@ -12,6 +12,8 @@ jobs:
         run: npm ci
       - name: Remove node_modules
         run: rm -rf node_modules
+      - name: Run tests
+        run: npm test
       - name: Pack
         run: npm pack
       - name: List tarball contents
