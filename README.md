@@ -21,7 +21,7 @@
 - **ESLint & Prettier** – code quality and formatting
 - **Git initialization** – with an initial commit
 - **SQLite** – optional local database integration
-- **SSO stub** – placeholder for enterprise authentication
+- **SSO login** – enterprise authentication via OAuth2
 - **Dark mode** – aligns with the native OS theme
 - **Packaging** – electron-builder configuration
 - **Predefined npm scripts** – dev, build, lint, format, and more

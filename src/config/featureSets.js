@@ -25,7 +25,7 @@ export const featureChoices = [
   { title: "Prettier", value: "prettier", selected: true, description: "Code formatter" },
   { title: "Git Init", value: "git", selected: true, description: "Initialize repository" },
   { title: "SQLite Support", value: "sqlite", description: "Local database" },
-  { title: "AD/SSO Login Stub", value: "sso", description: "Placeholder auth" },
+  { title: "AD/SSO Login", value: "sso", description: "OAuth2 authentication" },
   { title: "Dark Mode Support", value: "darkmode", selected: true, description: "OS theme detection" },
   { title: "Frameless Window", value: "frameless", description: "Custom title bar" },
   
