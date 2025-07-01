@@ -33,7 +33,7 @@ describe("scaffoldProject", () => {
         scripts: [],
         features: ["frameless"],
       };
-      const { outDir } = await scaffoldProject(answers);
+      const { outDir, metadata } = await scaffoldProject(answers);
       const controlFile = join(
         outDir,
         "src",
@@ -43,6 +43,7 @@ describe("scaffoldProject", () => {
       assert.ok(existsSync(controlFile));
       const preloadFile = join(outDir, "src", "preload.ts");
       assert.ok(existsSync(preloadFile));
+      assert.ok(metadata.features.includes("preload"));
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;

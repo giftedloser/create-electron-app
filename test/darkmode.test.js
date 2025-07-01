@@ -31,12 +31,14 @@ describe("darkmode feature", () => {
         scripts: [],
         features: ["darkmode"],
       };
-      const { outDir } = await scaffoldProject(answers);
+      const { outDir, metadata } = await scaffoldProject(answers);
       const file = join(outDir, "darkmode.js");
       assert.ok(existsSync(file));
       const mainFile = readFileSync(join(outDir, "src", "main.ts"), "utf8");
       const matches = mainFile.match(/import '\.\/darkmode\.js';/g) || [];
       assert.equal(matches.length, 1);
+      assert.ok(existsSync(join(outDir, "src", "preload.ts")));
+      assert.ok(metadata.features.includes("preload"));
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;
