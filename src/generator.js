@@ -169,7 +169,7 @@ export async function scaffoldProject(answers) {
 
   // Copy feature templates conditionally
   for (const feature of answers.features) {
-    if (feature === "git") {
+    if (feature === "git" || feature === "darkmode") {
       // skip features handled separately
       continue;
     }
@@ -182,6 +182,18 @@ export async function scaffoldProject(answers) {
       await copyDirRecursive(featureTemplateDir, outDir);
     } catch {
       // No template for feature; silently continue
+    }
+  }
+
+  // Handle darkmode feature separately
+  if (answers.features.includes("darkmode")) {
+    const darkSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
+    const darkDest = path.join(outDir, "src", "darkmode.js");
+    try {
+      await fs.copyFile(darkSrc, darkDest);
+    } catch (e) {
+      await cleanupProject();
+      throw new Error(`Failed copying darkmode.js: ${e.message}`);
     }
   }
 
@@ -198,13 +210,17 @@ export async function scaffoldProject(answers) {
 
   // Inject tokens (appName, title, author, license) into templates
   try {
-    await renderTemplateFiles(outDir, {
+    const tokens = {
       APP_NAME: answers.appName,
       WINDOW_TITLE: answers.title,
       AUTHOR: answers.author,
       LICENSE: answers.license,
       FRAMELESS: answers.features.includes("frameless") ? "true" : "false",
-    });
+      DARKMODE_IMPORT: answers.features.includes("darkmode")
+        ? "import './darkmode.js';"
+        : "",
+    };
+    await renderTemplateFiles(outDir, tokens);
   } catch (e) {
     await cleanupProject();
     throw new Error(`Template token rendering failed: ${e.message}`);
