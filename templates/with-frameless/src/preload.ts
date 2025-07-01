@@ -1,12 +1,10 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
-// Allowed channels must be explicitly listed. Add new channels here
-// to make them accessible from the renderer process.
+// Secure IPC API
 const allowedSendChannels = ['toMain'];
 const allowedReceiveChannels = ['fromMain'];
 
-// Expose a very small API for the renderer process using the allowlists above.
-export const api = {
+const api = {
   send(channel: string, data?: unknown) {
     if (allowedSendChannels.includes(channel)) {
       ipcRenderer.send(channel, data);
@@ -19,10 +17,15 @@ export const api = {
   },
 };
 
-contextBridge.exposeInMainWorld('api', api);
-
-contextBridge.exposeInMainWorld('windowControls', {
+// Frameless window controls
+const windowControls = {
   minimize: () => ipcRenderer.send('window:minimize'),
   maximize: () => ipcRenderer.send('window:maximize'),
   close: () => ipcRenderer.send('window:close'),
+};
+
+// Single contextBridge exposure
+contextBridge.exposeInMainWorld('api', {
+  ...api,
+  windowControls,
 });
