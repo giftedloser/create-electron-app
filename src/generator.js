@@ -170,7 +170,7 @@ export async function scaffoldProject(answers) {
 
   // Copy feature templates conditionally
   for (const feature of answers.features) {
-    if (feature === "git" || feature === "darkmode") {
+    if (feature === "git") {
       // skip features handled separately
       continue;
     }
@@ -212,9 +212,6 @@ if (extraImports.length > 0) {
     // ignore file modification errors
   }
 }
-
-    }
-  }
 
   // Include electron-builder config if dist script selected
   if (answers.scripts.includes("dist")) {
