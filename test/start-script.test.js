@@ -14,7 +14,7 @@ function createNpmStub() {
 }
 
 describe("start script", () => {
-  test("adds start script to package.json", async () => {
+  test("adds production start script", async () => {
     const tmp = mkdtempSync(join(tmpdir(), "scaffold-test-"));
     const { dir: npmDir } = createNpmStub();
     const originalPath = process.env.PATH;
@@ -28,12 +28,12 @@ describe("start script", () => {
         description: "",
         author: "",
         license: "MIT",
-        scripts: ["start"],
+        scripts: ["start-build"],
         features: [],
       };
       const { outDir } = await scaffoldProject(answers);
       const pkg = JSON.parse(readFileSync(join(outDir, "package.json"), "utf8"));
-      assert.equal(pkg.scripts.start, "node dist/main.js");
+      assert.equal(pkg.scripts["start-build"], "node dist/main.js");
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;

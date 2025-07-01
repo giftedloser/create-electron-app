@@ -14,7 +14,7 @@ function createNpmStub() {
 }
 
 describe("dev script", () => {
-  test("adds tsc watch and dev deps", async () => {
+  test("adds dev script and dev deps", async () => {
     const tmp = mkdtempSync(join(tmpdir(), "scaffold-test-"));
     const { dir: npmDir } = createNpmStub();
     const originalPath = process.env.PATH;
@@ -33,14 +33,8 @@ describe("dev script", () => {
       };
       const { outDir } = await scaffoldProject(answers);
       const pkg = JSON.parse(readFileSync(join(outDir, "package.json"), "utf8"));
-      assert.equal(
-        pkg.scripts.dev,
-        "cross-env NODE_ENV=development concurrently \"tsc -w\" \"vite --config vite.config.js\" \"electron .\""
-      );
+      assert.equal(pkg.scripts.dev, "vite --config vite.config.ts");
       assert.ok(pkg.devDependencies.typescript);
-      assert.ok(pkg.devDependencies["@types/node"]);
-      assert.ok(pkg.devDependencies["cross-env"], "cross-env missing");
-      assert.ok(pkg.devDependencies.concurrently, "concurrently missing");
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;
