@@ -5,9 +5,16 @@ import boxen from "boxen";
 import { featureChoices } from "./config/featureSets.js";
 import { scriptOptions } from "./config/scripts.js";
 import { info } from "./utils/logger.js";
+import { fileURLToPath } from "url";
+import path from "path";
+import fs from "fs";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json"), "utf8"));
+const CLI_NAME = Object.keys(pkg.bin)[0] || "create-electron-app";
 
 function printWelcome() {
-  const msg = `${chalk.bold("create-electron-app")}\nA friendly wizard to scaffold your Electron project.`;
+  const msg = `${chalk.bold(CLI_NAME)}\nA friendly wizard to scaffold your Electron project.`;
   info(boxen(msg, { padding: 1, borderColor: "cyan", margin: 1 }));
   info(chalk.gray("Use arrow keys to navigate, space to select, enter to confirm.\n"));
 }

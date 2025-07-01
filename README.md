@@ -105,7 +105,7 @@ npm run dist    # Package installers via electron-builder
 npm run lint    # Run ESLint
 npm run format  # Run Prettier
 npm run reset   # Remove node_modules and reinstall
-npm run db:init # Initialize the SQLite database
+npm run dbinit # Initialize the SQLite database
 npm run start   # Launch the compiled app
 ```
 
