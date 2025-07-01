@@ -15,8 +15,14 @@ export const scriptOptions = [
   { title: "npm run start → Launch production build", value: "start-build", description: "Run compiled app" }
 ];
 
+const runAsRoot = typeof process.getuid === "function" && process.getuid() === 0;
+const entry = "electron-main.mjs";
+const electronCmd = runAsRoot
+  ? `electron --no-sandbox ${entry}`
+  : `electron ${entry}`;
+
 export const fullScriptMap = {
-  dev: "vite --config vite.config.ts",
+  dev: `cross-env NODE_ENV=development concurrently "tsc -w" "vite --config vite.config.js" "${electronCmd}"`,
   electron: "electron .",
   start: "concurrently -k \"vite\" \"wait-on http://localhost:3000 && electron .\"",
   build: "tsc && vite build",

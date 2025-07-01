@@ -33,7 +33,14 @@ describe("dev script", () => {
       };
       const { outDir } = await scaffoldProject(answers);
       const pkg = JSON.parse(readFileSync(join(outDir, "package.json"), "utf8"));
-      assert.equal(pkg.scripts.dev, "vite --config vite.config.ts");
+      const runAsRoot = typeof process.getuid === "function" && process.getuid() === 0;
+      const entry = "electron-main.mjs";
+      const electronCmd = runAsRoot
+        ? `electron --no-sandbox ${entry}`
+        : `electron ${entry}`;
+      const expected =
+        `cross-env NODE_ENV=development concurrently "tsc -w" "vite --config vite.config.js" "${electronCmd}"`;
+      assert.equal(pkg.scripts.dev, expected);
       assert.ok(pkg.devDependencies.typescript);
     } finally {
       process.chdir(cwd);
