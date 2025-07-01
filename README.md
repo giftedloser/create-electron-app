@@ -18,14 +18,12 @@
 - **React with Vite** – fast, modern frontend development
 - **TypeScript** – strict typing across all layers
 - **Electron** – main & preload processes with secure IPC
-- **ESLint & Prettier** – code quality and formatting. Prettier is
-  configured via `.prettierrc` with single quotes, semicolons and
-  trailing commas.
+- **ESLint & Prettier** – code quality and formatting. Prettier enforces single quotes, semicolons, trailing commas, and consistent formatting via `.prettierrc`.
 - **Git initialization** – with an initial commit
 - **SQLite** – optional local database integration
 - **SSO login** – enterprise authentication via OAuth2
-- **Dark mode** – aligns with the native OS theme. Selecting this option automatically enables the **Preload** feature.
-- **Frameless window** – custom controls via `src/components/WindowControls.tsx`. Selecting this option automatically enables the **Preload** feature.
+- **Dark mode** – aligns with the native OS theme. This feature requires and automatically enables the **Preload** system, which will be scaffolded even if not manually selected.
+- **Frameless window** – custom controls via `src/components/WindowControls.tsx`. This feature requires and automatically enables the **Preload** system, which will be scaffolded even if not manually selected.
 - **Packaging** – electron-builder configuration
 - **Predefined npm scripts** – dev, build, lint, format, and more
 - Fully extensible with custom templates
@@ -71,7 +69,7 @@ Example options:
 
 ```bash
 create-electron-app my-app --help
-create-electron-app my-app
+create-electron-app my-app --answers ./answers.json
 ```
 
 ### CLI flags
@@ -91,7 +89,7 @@ For automated environments, supply a JSON answers file using `--answers` to skip
 create-electron-app my-app --answers ./answers.json --no-prompt
 ```
 
-The CLI aborts if no TTY is available and no answers file is provided.
+In noninteractive environments, the CLI requires --answers. Without it, execution will abort. See `templates/answers.example.json` for a valid noninteractive answers file format.
 
 The wizard walks you through:
 
@@ -115,8 +113,7 @@ After completion, your project folder includes:
 * `index.html` - placed at the project root; use `public/` for any other static assets
 * `package.json` - with all scripts and dependencies
 * `.gitignore` - standard ignores like `node_modules/` and `dist/`
-* `.prettierrc` and `.prettierignore` - Prettier rules and ignore
-  patterns when the feature is enabled
+* `.prettierrc` and `.prettierignore` - Prettier rules and ignore patterns when the feature is enabled
 * `.eslintrc` - linting configuration
 * Modular feature files (e.g., `db.js` for SQLite)
 * Config files and README
@@ -253,6 +250,7 @@ Contributions and issues welcome! Please:
 * Support more database options and authentication methods
 * Integrate CI/CD pipeline templates
 * Add internationalization and localization support
+* Provide a default GitHub Actions CI template for build and pack validation
 
 
 ## Release Workflow

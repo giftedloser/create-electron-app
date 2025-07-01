@@ -252,7 +252,6 @@ if (extraImports.length > 0) {
       "../templates/with-darkmode/src/darkmode.js"
     );
     const darkDestSrc = path.join(outDir, "src", "darkmode.js");
-    const darkDestRoot = path.join(outDir, "darkmode.js");
     try {
       await fs.copyFile(darkSrc, darkDestSrc);
     } catch (e) {

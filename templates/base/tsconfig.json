@@ -3,9 +3,9 @@
     "target": "ES2021",
     "module": "ESNext",
     "moduleResolution": "node",
+    "allowJs": true,
     "strict": true,
     "esModuleInterop": true,
-    "allowJs": true,
     "outDir": "dist",
     "baseUrl": ".",
     "jsx": "react-jsx",
@@ -13,6 +13,7 @@
   },
   "include": [
     "src",
+    "src/**/*.ts",
     "src/**/*.js",
     "src/global.d.ts"
   ]
