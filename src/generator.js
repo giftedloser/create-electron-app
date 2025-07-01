@@ -261,8 +261,17 @@ if (extraImports.length > 0) {
     }
   }
 
-  // Remove global.d.ts from tsconfig if not present
+  // Remove global.d.ts when preload feature not selected
   const globalTypesPath = path.join(outDir, "src", "global.d.ts");
+  if (!answers.features.includes("preload")) {
+    try {
+      await fs.rm(globalTypesPath, { force: true });
+    } catch {
+      // ignore errors
+    }
+  }
+
+  // Remove global.d.ts from tsconfig if not present
   try {
     await fs.access(globalTypesPath);
   } catch {
