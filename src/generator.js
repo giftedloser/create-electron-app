@@ -129,7 +129,8 @@ export async function scaffoldProject(answers) {
   // Include preload script only if feature selected
   const preloadFile = path.join(outDir, "src", "preload.ts");
   const mainFile = path.join(outDir, "src", "main.ts");
-  if (!answers.features.includes("preload")) {
+  const usingPreload = answers.features.includes("preload") || answers.features.includes("frameless");
+  if (!usingPreload) {
     try {
       await fs.rm(preloadFile, { force: true });
     } catch {
@@ -201,6 +202,7 @@ export async function scaffoldProject(answers) {
       WINDOW_TITLE: answers.title,
       AUTHOR: answers.author,
       LICENSE: answers.license,
+      FRAMELESS: answers.features.includes("frameless") ? "true" : "false",
     });
   } catch (e) {
     await cleanupProject();
