@@ -85,6 +85,14 @@ create-electron-app --version
 
 Running `create-electron-app` with no arguments starts the interactive wizard.
 
+For automated environments, supply a JSON answers file using `--answers` to skip prompts:
+
+```bash
+create-electron-app my-app --answers ./answers.json
+```
+
+The CLI aborts if no TTY is available and no answers file is provided.
+
 The wizard walks you through:
 
 - Project metadata (name, author, license, description)
