@@ -307,13 +307,14 @@ if (extraImports.length > 0) {
     throw new Error(`Template token rendering failed: ${e.message}`);
   }
 
-  // Install dependencies
+  // Install dependencies using chosen package manager
+  const pm = answers.packageManager || "npm";
   try {
     info("🔧 Installing dependencies...");
-    await execa("npm", ["install"], { cwd: outDir, stdio: "inherit" });
+    await execa(pm, ["install"], { cwd: outDir, stdio: "inherit" });
   } catch (e) {
     await cleanupProject();
-    throw new Error(`npm install failed: ${e.message}. Project directory cleaned up.`);
+    throw new Error(`${pm} install failed: ${e.message}. Project directory cleaned up.`);
   }
 
   // Initialize Git repo if selected

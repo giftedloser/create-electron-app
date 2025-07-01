@@ -40,6 +40,7 @@ Name: ${answers.appName}
 Title: ${answers.title}
 Author: ${answers.author}
 License: ${answers.license}
+Package Manager: ${answers.packageManager}
 
 ${chalk.underline("Features")}
 ${featureList}
@@ -53,7 +54,7 @@ ${scriptList}
 
 export async function createAppWizard() {
   const answers = {};
-  const totalSteps = 4;
+  const totalSteps = 5;
 
   const onCancel = () => {
     console.log("Aborted.");
@@ -143,7 +144,25 @@ export async function createAppWizard() {
   }
   printDivider();
 
-  printStepHeader(3, totalSteps, "Dev Script Options");
+  printStepHeader(3, totalSteps, "Package Manager");
+  const pmPrompt = await prompts(
+    {
+      type: "select",
+      name: "packageManager",
+      message: chalk.cyan("Choose your package manager:"),
+      choices: [
+        { title: "npm", value: "npm" },
+        { title: "yarn", value: "yarn" },
+        { title: "pnpm", value: "pnpm" },
+      ],
+      initial: 0,
+    },
+    { onCancel }
+  );
+  Object.assign(answers, pmPrompt);
+  printDivider();
+
+  printStepHeader(4, totalSteps, "Dev Script Options");
   const scriptPrompt = await prompts({
     type: "multiselect",
     name: "scripts",
@@ -171,7 +190,7 @@ export async function createAppWizard() {
   }
   printDivider();
 
-  printStepHeader(4, totalSteps, "Summary & Confirm");
+  printStepHeader(5, totalSteps, "Summary & Confirm");
   renderSummary(answers);
 
   const confirm = await prompts({

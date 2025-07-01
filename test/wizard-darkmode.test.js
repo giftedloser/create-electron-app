@@ -24,6 +24,7 @@ describe("wizard darkmode", () => {
       "",
       "MIT",
       ["darkmode"],
+      "npm",
       ["dev"],
       true,
     ]);

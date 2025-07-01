@@ -30,6 +30,7 @@ describe("wizard script dependencies", () => {
       "",
       "MIT",
       [],
+      "npm",
       ["lint"],
       true,
     ]);
@@ -45,6 +46,7 @@ describe("wizard script dependencies", () => {
       "",
       "MIT",
       [],
+      "npm",
       ["format"],
       true,
     ]);
