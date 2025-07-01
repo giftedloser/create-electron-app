@@ -34,6 +34,15 @@ export async function scaffoldProject(answers) {
     throw new Error(`Target directory '${outDir}' exists and is not empty.`);
   }
 
+  // Ensure preload feature when required by other features
+  if (
+    (answers.features.includes("darkmode") || answers.features.includes("frameless")) &&
+    !answers.features.includes("preload")
+  ) {
+    answers.features.push("preload");
+    info("Preload feature enabled automatically.");
+  }
+
   // Define required dependencies explicitly
   const dependencies = {
     vite: "^4.0.0",
