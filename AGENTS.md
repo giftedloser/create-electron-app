@@ -59,7 +59,7 @@ Each feature corresponds to `templates/with-<feature>/`:
   "format": "prettier --write .",
   "reset": "rimraf node_modules && npm install",
   "dbinit": "node scripts/init-db.js",
-  "start": "node dist/index.js"
+  "start": "node dist/main.js"
 }
 ```
 
@@ -156,7 +156,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
 | `preload: ${__dirname}` error | TS doesn't allow template literals                           | Used `path.join(__dirname, "preload.js")`                                |
 | HTML parse5 errors            | Double-quoted attributes from PowerShell `@""` heredoc       | Switched to proper HTML escaping                                         |
 | `/src/main.tsx` not found     | `index.html` moved to `src/` instead of staying in `public/` | Ensured `index.html` is in `public/`                                     |
-| `npm run start` fails         | No compiled `dist/index.js`                                  | `npm run build` must succeed and output must match `start` script target |
+| `npm run start` fails         | No compiled `dist/main.js`                                  | `npm run build` must succeed and output must match `start` script target |
 
 ---
 
@@ -167,14 +167,14 @@ If you're handing this to Claude or another dev:
 1. Ensure `create-electron-app` CLI is global (`npm link` or installed via symlink)
 2. Run `create-electron-app` and test every selected feature path.
 3. `npm run dev` for live mode
-4. `npm run build` → generates `dist/index.js`
+4. `npm run build` → generates `dist/main.js`
 5. `npm run start` for production mode
 
 If anything breaks, likely reasons:
 
 * Missing or broken templates under `/templates/with-*`
 * Vite config misalignment (ensure TS and JSX support)
-* Incomplete TypeScript build (`tsc` must emit `dist/index.js`)
+* Incomplete TypeScript build (`tsc` must emit `dist/main.js`)
 * Wrong preload path or missing script
 
 ---
