@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [1.1.0] - 2025-07-01
 - Support YAML/YML token replacement in templates.
 - Locked core features (React, TypeScript, Electron) so they cannot be deselected.
 - Display mandatory core features separately in the wizard instead of disabled options.
