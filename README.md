@@ -102,7 +102,7 @@ After completion, your project folder includes:
 
 * `src/` - Electron main process and frontend sources
 * `src/preload.ts` - exposes IPC-safe APIs using an allowlist of channels
-* `public/` - Static assets including `index.html`
+* `index.html` - placed at the project root; use `public/` for any other static assets
 * `package.json` - with all scripts and dependencies
 * `.gitignore` - standard ignores like `node_modules/` and `dist/`
 * `.prettierrc` and `.prettierignore` - Prettier rules and ignore
