@@ -25,10 +25,11 @@ function createWindow() {
     },
   });
 
-  win.loadURL("http://localhost:3000");
-
   if (process.env.NODE_ENV === "development") {
+    win.loadURL("http://localhost:3000");
     win.webContents.openDevTools();
+  } else {
+    win.loadFile(path.join(__dirname, "../dist/index.html"));
   }
 }
 
