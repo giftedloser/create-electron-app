@@ -71,6 +71,17 @@ create-electron-app my-app --help
 create-electron-app my-app
 ```
 
+### CLI flags
+
+Use `--help` to display usage information or `--version` to print the installed version.
+
+```bash
+create-electron-app --help
+create-electron-app --version
+```
+
+Running `create-electron-app` with no arguments starts the interactive wizard.
+
 The wizard walks you through:
 
 - Project metadata (name, author, license, description)
@@ -162,6 +173,7 @@ npm test
 ```
 
 The tests live in the `test/` directory and require **Node.js 18+**, as noted above.
+
 
 ---
 
