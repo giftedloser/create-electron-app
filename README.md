@@ -86,7 +86,8 @@ Running `create-electron-app` with no arguments starts the interactive wizard.
 The wizard walks you through:
 
 - Project metadata (name, author, license, description)
-- Core features (React, TypeScript, Preload, SQLite, SSO, dark mode)
+- **Mandatory features** (React, TypeScript, Electron)
+- Optional features like Preload, SQLite, SSO and dark mode
 - Dev tooling (ESLint, Prettier)
 - Packaging scripts
 - Window and UI options

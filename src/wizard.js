@@ -101,15 +101,32 @@ export async function createAppWizard() {
   printDivider();
 
   printStepHeader(2, totalSteps, "Feature Selection");
+
+  const mandatory = featureChoices.filter(f => f.mandatory);
+  const optional = featureChoices.filter(f => !f.mandatory);
+
+  if (mandatory.length) {
+    const list = mandatory.map(f => `- ${f.title}`).join("\n");
+    info(boxen(`Mandatory features:\n${list}`, {
+      padding: 1,
+      borderColor: "cyan",
+      margin: 1,
+    }));
+  }
+
   const featurePrompt = await prompts({
     type: "multiselect",
-    name: "features",
-    message: chalk.cyan("Select core features:"),
-    choices: featureChoices,
+    name: "selected",
+    message: chalk.cyan("Select optional features:"),
+    choices: optional,
     instructions: "Use space to select and enter to continue",
-    min: 1,
+    min: 0,
   }, { onCancel });
-  Object.assign(answers, featurePrompt);
+
+  answers.features = [
+    ...mandatory.map(f => f.value),
+    ...(featurePrompt.selected || []),
+  ];
   printDivider();
 
   printStepHeader(3, totalSteps, "Dev Script Options");

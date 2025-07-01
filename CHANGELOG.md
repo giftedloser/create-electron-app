@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. The format 
 ## [Unreleased]
 - Support YAML/YML token replacement in templates.
 - Locked core features (React, TypeScript, Electron) so they cannot be deselected.
+- Display mandatory core features separately in the wizard instead of disabled options.
 - Resolved npm audit issues by pinning eslint and related plugins.
 - Added frameless window option with custom window controls.
 - Added Node-based test suite for CLI and rendering utilities.
