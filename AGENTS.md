@@ -40,10 +40,11 @@ Each feature corresponds to `templates/with-<feature>/`:
 * `electron`: always included
 * `preload`: adds `src/preload.ts`
 * `eslint`: `.eslintrc.js`
-* `prettier`: `.prettierrc`
+* `prettier`: `.prettierrc`, `.prettierignore`
 * `sqlite`: `sqlite3`, `scripts/init-db.js`
 * `sso`: creates login handler for AD/SSO
-* `darkmode`: adds `darkmode.js`
+* `darkmode`: adds `darkmode.js` (auto-enables `preload`)
+* `frameless`: custom window controls (auto-enables `preload`)
 
 ---
 
