@@ -3,6 +3,7 @@
     "target": "ES2021",
     "module": "ESNext",
     "moduleResolution": "node",
+    "allowJs": true,
     "strict": true,
     "esModuleInterop": true,
     "outDir": "dist",
@@ -11,7 +12,8 @@
     "types": ["vite/client", "node"]
   },
   "include": [
-    "src",
+    "src/**/*.ts",
+    "src/**/*.js",
     "src/global.d.ts"
   ]
 }
