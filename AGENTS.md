@@ -53,7 +53,7 @@ Each feature corresponds to `templates/with-<feature>/`:
 ```json
 "scripts": {
 
-  "dev": "cross-env NODE_ENV=development concurrently \"tsc -w\" \"vite --config vite.config.js\" \"electron .\"",
+  "dev": "cross-env NODE_ENV=development concurrently \"tsc -w\" \"vite --config vite.config.js\" \"electron electron-main.mjs\"",
   "build": "vite build && tsc",
   "dist": "electron-builder",
   "clean": "rimraf dist build .cache",
