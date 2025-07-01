@@ -1,4 +1,4 @@
-create-electron-app/
+'''create-electron-app/
 ├── bin/                      # CLI entrypoint
 │   └── index.js              # Main executable for `create-electron-app`
 │
@@ -69,7 +69,7 @@ create-electron-app/
 ----
 
 
-my-app/
+'''my-app/
 ├── dist/                      # Output folder from build (created after `npm run build`)
 │   ├── darkmode.js            # Compiled dark mode script (if enabled)
 │   ├── main.js                # Compiled Electron main process
