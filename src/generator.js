@@ -227,6 +227,23 @@ if (extraImports.length > 0) {
     }
   }
 
+  // Remove global.d.ts from tsconfig if not present
+  const globalTypesPath = path.join(outDir, "src", "global.d.ts");
+  try {
+    await fs.access(globalTypesPath);
+  } catch {
+    const tsconfigPath = path.join(outDir, "tsconfig.json");
+    try {
+      const tsconfig = JSON.parse(await fs.readFile(tsconfigPath, "utf8"));
+      if (Array.isArray(tsconfig.include)) {
+        tsconfig.include = tsconfig.include.filter((p) => p !== "src/global.d.ts");
+      }
+      await fs.writeFile(tsconfigPath, JSON.stringify(tsconfig, null, 2));
+    } catch {
+      // ignore tsconfig modification errors
+    }
+  }
+
   // Inject tokens (appName, title, author, license) into templates
   try {
     const tokens = {
