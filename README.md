@@ -128,6 +128,10 @@ npm run dbinit # Initialize the SQLite database (if included)
 npm run start   # Launch the compiled app
 ```
 
+The `dev` script uses `cross-env` and `concurrently` to spawn `tsc -w`, Vite and
+Electron in parallel. Any changes to TypeScript files trigger an incremental
+rebuild so your app refreshes immediately.
+
 ## Adding IPC Channels
 
 `src/preload.ts` contains two arrays, `allowedSendChannels` and `allowedReceiveChannels`, which control which IPC messages the renderer may use. To expose a new channel, add its name to one of these arrays:

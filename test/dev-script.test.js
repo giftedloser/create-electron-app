@@ -39,6 +39,8 @@ describe("dev script", () => {
       );
       assert.ok(pkg.devDependencies.typescript);
       assert.ok(pkg.devDependencies["@types/node"]);
+      assert.ok(pkg.devDependencies["cross-env"], "cross-env missing");
+      assert.ok(pkg.devDependencies.concurrently, "concurrently missing");
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;
