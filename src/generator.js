@@ -106,6 +106,7 @@ export async function scaffoldProject(answers) {
   }
   if (answers.scripts.includes("dev")) {
     pkg.devDependencies["cross-env"] = "^7.0.3";
+    pkg.devDependencies["concurrently"] = "^8.2.0";
   }
 
   try {
