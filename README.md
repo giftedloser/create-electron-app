@@ -18,7 +18,9 @@
 - **React with Vite** – fast, modern frontend development
 - **TypeScript** – strict typing across all layers
 - **Electron** – main & preload processes with secure IPC
-- **ESLint & Prettier** – code quality and formatting
+- **ESLint & Prettier** – code quality and formatting. Prettier is
+  configured via `.prettierrc` with single quotes, semicolons and
+  trailing commas.
 - **Git initialization** – with an initial commit
 - **SQLite** – optional local database integration
 - **SSO login** – enterprise authentication via OAuth2
@@ -103,7 +105,9 @@ After completion, your project folder includes:
 * `public/` - Static assets including `index.html`
 * `package.json` - with all scripts and dependencies
 * `.gitignore` - standard ignores like `node_modules/` and `dist/`
-* `.prettierrc` and `.eslintrc` - code style configs
+* `.prettierrc` and `.prettierignore` - Prettier rules and ignore
+  patterns when the feature is enabled
+* `.eslintrc` - linting configuration
 * Modular feature files (e.g., `db.js` for SQLite)
 * Config files and README
 
