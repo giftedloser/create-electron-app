@@ -8,7 +8,7 @@ export const scriptOptions = [
   { title: "npm run lint → Run ESLint", value: "lint", selected: true, description: "Check code" },
   { title: "npm run format → Run Prettier", value: "format", selected: true, description: "Format code" },
   { title: "npm run reset → Clean + reinstall deps", value: "reset", description: "Full reinstall" },
-  { title: "npm run db:init → Initialize SQLite schema", value: "dbinit", description: "Setup DB" },
+  { title: "npm run dbinit → Initialize SQLite schema", value: "dbinit", description: "Setup DB" },
   { title: "npm run start → Launch production build", value: "start", description: "Run compiled app" }
 ];
 
