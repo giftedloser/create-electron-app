@@ -41,16 +41,58 @@ if (args.includes("-h") || args.includes("--help")) {
   console.log("Usage: create-electron-app [options]\n" +
     "Run without options to start the interactive wizard.\n" +
     "The wizard lets you choose npm, yarn or pnpm for dependency installation.\n" +
-    "  -h, --help     Show this help\n" +
-    "  -v, --version  Show CLI version");
+    "  -h, --help         Show this help\n" +
+    "  -v, --version      Show CLI version\n" +
+    "  --no-prompt        Fail if prompts would be shown (CI)\n" +
+    "  --answers <file>   JSON answers file for noninteractive use");
   process.exit(0);
+}
+
+// Parse additional options
+let answersPath = null;
+let noPrompt = false;
+const positional = [];
+for (let i = 0; i < args.length; i++) {
+  const a = args[i];
+  if (a === "--answers") {
+    answersPath = args[i + 1];
+    i++;
+  } else if (a.startsWith("--answers=")) {
+    answersPath = a.split("=")[1];
+  } else if (a === "--no-prompt") {
+    noPrompt = true;
+  } else if (!a.startsWith("-")) {
+    positional.push(a);
+  }
 }
 
 async function main() {
   try {
     info("🛠️  create-electron-app CLI\n-----------------------------");
 
-    const answers = await createAppWizard();
+    if (!process.stdout.isTTY && !answersPath) {
+      logError("Noninteractive environment detected. Use --answers <file>.");
+      process.exit(1);
+    }
+
+    let answers;
+    if (answersPath) {
+      try {
+        const json = fs.readFileSync(path.resolve(answersPath), "utf8");
+        answers = JSON.parse(json);
+        if (positional[0] && !answers.appName) {
+          answers.appName = positional[0];
+        }
+      } catch (err) {
+        logError(`Failed reading answers file: ${err.message}`);
+        process.exit(1);
+      }
+    } else if (noPrompt) {
+      logError("--no-prompt requires --answers <file>");
+      process.exit(1);
+    } else {
+      answers = await createAppWizard();
+    }
 
     const skipInstall = process.env.SKIP_INSTALL === "1";
     const result = await scaffoldProject(answers, { skipInstall });
