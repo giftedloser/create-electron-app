@@ -9,7 +9,7 @@ export const scriptOptions = [
   { title: "npm run format → Run Prettier", value: "format", selected: true, description: "Format code" },
   { title: "npm test → Run Node.js tests", value: "test", selected: true, description: "node --test" },
   { title: "npm run reset → Clean + reinstall deps", value: "reset", description: "Full reinstall" },
-  { title: "npm run db:init → Initialize SQLite schema", value: "dbinit", description: "Setup DB" },
+  { title: "npm run dbinit → Initialize SQLite schema", value: "dbinit", description: "Setup DB" },
   { title: "npm run start → Launch production build", value: "start", description: "Run compiled app" }
 ];
 
