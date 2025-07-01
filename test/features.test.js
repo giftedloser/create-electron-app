@@ -32,7 +32,7 @@ describe("scaffoldProject darkmode", () => {
         features: ["darkmode"],
       };
       const { outDir } = await scaffoldProject(answers);
-      const file = join(outDir, "darkmode.js");
+      const file = join(outDir, "src", "darkmode.js");
       assert.ok(existsSync(file));
       const mainFile = join(outDir, "src", "main.ts");
       const main = readFileSync(mainFile, "utf8");
