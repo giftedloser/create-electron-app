@@ -186,12 +186,24 @@ export async function scaffoldProject(answers) {
     }
   }
 
+  // Handle darkmode feature separately
+  if (answers.features.includes("darkmode")) {
+    const darkSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
+    const darkDest = path.join(outDir, "src", "darkmode.js");
+    try {
+      await fs.copyFile(darkSrc, darkDest);
+    } catch (e) {
+      await cleanupProject();
+      throw new Error(`Failed copying darkmode.js: ${e.message}`);
+    }
+  }
+
 // Conditionally inject main process imports for selected features
 const extraImports = [];
 
 
 if (answers.features.includes("sso")) {
-  extraImports.push("./auth.js");
+  extraImports.push("../auth.js");
 }
 
 if (extraImports.length > 0) {

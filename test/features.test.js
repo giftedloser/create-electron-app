@@ -69,7 +69,7 @@ describe("scaffoldProject sso", () => {
       assert.ok(existsSync(file));
       const mainFile = join(outDir, "src", "main.ts");
       const main = readFileSync(mainFile, "utf8");
-      assert.match(main, /import .*['\"]\.\/auth\.js['\"]/);
+      assert.match(main, /import .*['\"]\.\.\/auth\.js['\"]/);
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;
