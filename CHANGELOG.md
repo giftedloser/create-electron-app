@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file. The format 
 - Added cross-env dev script and Node >=18 engine requirement.
 - Added MIT license and improved documentation.
 - Removed redundant Prettier config file.
+- Release workflow now removes `node_modules` before `npm pack` and verifies tarball contents.
 
 ## [1.0.0] - 2025-06-30
 - Initial release of `create-electron-app` CLI.
