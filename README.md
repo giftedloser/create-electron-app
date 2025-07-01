@@ -164,12 +164,16 @@ can tweak this file before running the `dist` script.
 * Project scaffolding logic in `src/generator.js`
 * Utilities in `src/utils/`
 
-### Template Tokens
+## Running Tests
 
-Template files use placeholders like `{{APP_NAME}}` or `{{WINDOW_TITLE}}`. When a
-project is generated, the `renderTemplateFiles` utility walks every templated
-file and replaces these tokens with the values you entered in the CLI wizard.
-For implementation details see [`src/utils/render.js`](src/utils/render.js).
+Run the Node test suite with:
+
+```bash
+npm test
+```
+
+The tests live in the `test/` directory and require **Node.js 18+**, as noted above.
+
 
 ---
 
