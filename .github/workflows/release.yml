@@ -1,0 +1,18 @@
+name: Release
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install deps
+        run: npm ci
+      - name: Remove node_modules
+        run: rm -rf node_modules
+      - name: Pack
+        run: npm pack
+      - name: List tarball contents
+        run: tar -tf *.tgz

@@ -215,6 +215,13 @@ Contributions and issues welcome! Please:
 * Add internationalization and localization support
 
 
+## Release Workflow
+
+The GitHub Actions workflow defined in `.github/workflows/release.yml` removes
+`node_modules` before running `npm pack`. It then lists the tarball contents so
+you can confirm that only the source files and templates are included.
+
+
 ## Changelog
 
 This project maintains a `CHANGELOG.md` following the [Keep a Changelog](https://keepachangelog.com/). When preparing a new release:
