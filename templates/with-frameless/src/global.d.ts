@@ -16,6 +16,9 @@ declare global {
   interface Window {
     api?: {
       windowControls: WindowControls;
+      getDarkMode?: () => Promise<boolean>;
+      on: (channel: string, listener: (...args: unknown[]) => void) => void;
+      send: (channel: string, data?: unknown) => void;
       [key: string]: any;
     };
   }
