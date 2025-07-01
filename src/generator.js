@@ -80,9 +80,6 @@ export async function scaffoldProject(answers) {
     }
   }
 
-  if (answers.scripts.includes("dbinit")) {
-    pkg.scripts["dbinit"] = fullScriptMap.dbinit;
-  }
   pkg.dependencies = { ...dependencies };
   Object.assign(pkg.devDependencies, devDependencies);
 
