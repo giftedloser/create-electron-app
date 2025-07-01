@@ -80,7 +80,7 @@ export async function scaffoldProject(answers) {
     }
   }
 
-  if (answers.features.includes("sqlite")) {
+  if (answers.scripts.includes("dbinit")) {
     pkg.scripts["dbinit"] = fullScriptMap.dbinit;
   }
   pkg.dependencies = { ...dependencies };
@@ -199,7 +199,10 @@ export async function scaffoldProject(answers) {
 
   // Copy special feature files
   if (answers.features.includes("darkmode")) {
-    const dmSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
+    const dmSrc = path.resolve(
+      __dirname,
+      "../templates/with-darkmode/src/darkmode.js"
+    );
     try {
       await fs.copyFile(dmSrc, path.join(outDir, "darkmode.js"));
       await ensureDir(path.join(outDir, "src"));
@@ -247,7 +250,10 @@ if (extraImports.length > 0) {
 
   // Handle darkmode feature separately
   if (answers.features.includes("darkmode")) {
-    const darkSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
+    const darkSrc = path.resolve(
+      __dirname,
+      "../templates/with-darkmode/src/darkmode.js"
+    );
     const darkDestSrc = path.join(outDir, "src", "darkmode.js");
     const darkDestRoot = path.join(outDir, "darkmode.js");
     try {
