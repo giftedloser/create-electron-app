@@ -153,6 +153,16 @@ can tweak this file before running the `dist` script.
 * Project scaffolding logic in `src/generator.js`
 * Utilities in `src/utils/`
 
+## Running Tests
+
+Run the Node test suite with:
+
+```bash
+npm test
+```
+
+The tests live in the `test/` directory and require **Node.js 18+**, as noted above.
+
 ---
 
 ## Contributing
