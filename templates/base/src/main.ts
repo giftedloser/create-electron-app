@@ -4,11 +4,20 @@ import { fileURLToPath } from "url";
 {{DARKMODE_IMPORT}}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const FRAMELESS = {{FRAMELESS}};
 
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    ...(FRAMELESS
+      ? {
+          frame: false,
+          transparent: true,
+          backgroundColor: "#00000000",
+          titleBarStyle: "hiddenInset",
+        }
+      : {}),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
