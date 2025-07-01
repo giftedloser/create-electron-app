@@ -26,6 +26,12 @@ console.log(gradient.rainbow.multiline(title));
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json"), "utf8"));
 
+const [major] = process.versions.node.split('.').map(Number);
+if (major < 18) {
+  console.error('Node.js 18 or newer is required.');
+  process.exit(1);
+}
+
 const args = process.argv.slice(2);
 if (args.includes("-v") || args.includes("--version")) {
   console.log(`v${pkg.version}`);
