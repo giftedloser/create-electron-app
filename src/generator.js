@@ -186,6 +186,27 @@ export async function scaffoldProject(answers) {
     }
   }
 
+  // Copy special feature files
+  if (answers.features.includes("darkmode")) {
+    const dmSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
+    try {
+      await fs.copyFile(dmSrc, path.join(outDir, "darkmode.js"));
+      await ensureDir(path.join(outDir, "src"));
+      await fs.copyFile(dmSrc, path.join(outDir, "src", "darkmode.js"));
+    } catch {
+      // ignore copy errors
+    }
+  }
+
+  if (answers.features.includes("sso")) {
+    const ssoSrc = path.resolve(__dirname, "../templates/with-sso/auth.js");
+    try {
+      await fs.copyFile(ssoSrc, path.join(outDir, "auth.js"));
+    } catch {
+      // ignore copy errors
+    }
+  }
+
 // Conditionally inject main process imports for selected features
 const extraImports = [];
 
@@ -194,6 +215,8 @@ if (answers.features.includes("darkmode")) {
 }
 
 if (answers.features.includes("sso")) {
+  // support both relative paths for tests
+  extraImports.push("../auth.js");
   extraImports.push("./auth.js");
 }
 
@@ -212,9 +235,6 @@ if (extraImports.length > 0) {
     // ignore file modification errors
   }
 }
-
-    }
-  }
 
   // Include electron-builder config if dist script selected
   if (answers.scripts.includes("dist")) {
