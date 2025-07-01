@@ -51,6 +51,7 @@ Each feature corresponds to `templates/with-<feature>/`:
 
 ```json
 "scripts": {
+
   "dev": "vite --config vite.config.js && electron .",
   "build": "vite build && tsc",
   "dist": "electron-builder",
