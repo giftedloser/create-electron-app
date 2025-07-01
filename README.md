@@ -203,6 +203,7 @@ can tweak this file before running the `dist` script.
 * CLI prompts in `src/wizard.js`
 * Project scaffolding logic in `src/generator.js`
 * Utilities in `src/utils/`
+* Set `SKIP_INSTALL=1` to bypass dependency installation during scaffolding
 
 ## Running Tests
 
