@@ -22,7 +22,7 @@
 - **Git initialization** – with an initial commit
 - **SQLite** – optional local database integration
 - **SSO login** – enterprise authentication via OAuth2
-- **Dark mode** – aligns with the native OS theme
+- **Dark mode** – aligns with the native OS theme. Selecting this option automatically enables the **Preload** feature.
 - **Frameless window** – custom controls via `src/components/WindowControls.tsx`. Selecting this option automatically enables the **Preload** feature.
 - **Packaging** – electron-builder configuration
 - **Predefined npm scripts** – dev, build, lint, format, and more
@@ -87,7 +87,7 @@ The wizard walks you through:
 
 - Project metadata (name, author, license, description)
 - **Mandatory features** (React, TypeScript, Electron)
-- Optional features like Preload, SQLite, SSO and dark mode. Choosing the frameless window option will enable Preload automatically.
+- Optional features like Preload, SQLite, SSO and dark mode. Choosing the frameless window or dark mode option will enable Preload automatically.
 - Dev tooling (ESLint, Prettier)
 - Packaging scripts
 - Window and UI options

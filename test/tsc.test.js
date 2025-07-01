@@ -44,7 +44,7 @@ describe("tsconfig", () => {
           "declare module 'react-dom';",
           "declare module 'react-dom/client';",
           "declare module 'vite/client';",
-          "declare global { interface Window { api: any } }",
+          "declare global { interface Window { api?: any } }",
           "export {};",
           "",
         ].join("\n")
