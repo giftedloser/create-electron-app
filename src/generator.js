@@ -213,9 +213,6 @@ if (extraImports.length > 0) {
   }
 }
 
-    }
-  }
-
   // Include electron-builder config if dist script selected
   if (answers.scripts.includes("dist")) {
     const builderTemplate = path.resolve(__dirname, "../templates/with-dist");
