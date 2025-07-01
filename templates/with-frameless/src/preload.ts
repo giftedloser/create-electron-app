@@ -24,7 +24,7 @@ const windowControls = {
   close: () => ipcRenderer.send('window:close'),
 };
 
-// Single contextBridge exposure
+// Single contextBridge exposure. Renderer access: window.api.windowControls
 contextBridge.exposeInMainWorld('api', {
   ...api,
   windowControls,
