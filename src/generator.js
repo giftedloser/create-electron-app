@@ -197,20 +197,6 @@ export async function scaffoldProject(answers) {
   }
 
 
-  // Copy special feature files
-  if (answers.features.includes("darkmode")) {
-    const dmSrc = path.resolve(
-      __dirname,
-      "../templates/with-darkmode/src/darkmode.js"
-    );
-    try {
-      await fs.copyFile(dmSrc, path.join(outDir, "darkmode.js"));
-      await ensureDir(path.join(outDir, "src"));
-      await fs.copyFile(dmSrc, path.join(outDir, "src", "darkmode.js"));
-    } catch {
-      // ignore copy errors
-    }
-  }
 
   if (answers.features.includes("sso")) {
     const ssoSrc = path.resolve(__dirname, "../templates/with-sso/auth.js");
