@@ -14,7 +14,7 @@ function createNpmStub() {
 }
 
 describe("build script", () => {
-  test("build script runs vite before tsc", async () => {
+  test("build script runs tsc before vite", async () => {
     const tmp = mkdtempSync(join(tmpdir(), "scaffold-test-"));
     const { dir: npmDir } = createNpmStub();
     const originalPath = process.env.PATH;
@@ -33,7 +33,7 @@ describe("build script", () => {
       };
       const { outDir } = await scaffoldProject(answers);
       const pkg = JSON.parse(readFileSync(join(outDir, "package.json"), "utf8"));
-      assert.equal(pkg.scripts.build, "vite build && tsc");
+      assert.equal(pkg.scripts.build, "tsc && vite build");
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;

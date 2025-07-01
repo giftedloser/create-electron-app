@@ -1,7 +1,9 @@
 // File: src/config/scripts.js
 
 export const scriptOptions = [
-  { title: "npm run dev → Start dev mode (Vite + Electron)", value: "dev", selected: true, description: "Hot reload" },
+  { title: "npm run dev → Run Vite dev server", value: "dev", selected: true, description: "Renderer dev" },
+  { title: "npm run electron → Launch Electron", value: "electron" },
+  { title: "npm run start → Dev server + Electron", value: "start", selected: true, description: "Full dev" },
   { title: "npm run build → Compile TypeScript + bundle", value: "build", selected: true, description: "Production bundle" },
   { title: "npm run dist → Create standalone app (electron-builder)", value: "dist", selected: true, description: "Package installer" },
   { title: "npm run clean → Remove build/dist/cache folders", value: "clean", description: "Clear output" },
@@ -10,7 +12,7 @@ export const scriptOptions = [
   { title: "npm test → Run Node.js tests", value: "test", selected: true, description: "node --test" },
   { title: "npm run reset → Clean + reinstall deps", value: "reset", description: "Full reinstall" },
   { title: "npm run dbinit → Initialize SQLite schema", value: "dbinit", description: "Setup DB" },
-  { title: "npm run start → Launch production build", value: "start", description: "Run compiled app" }
+  { title: "npm run start → Launch production build", value: "start-build", description: "Run compiled app" }
 ];
 
 const runAsRoot = typeof process.getuid === "function" && process.getuid() === 0;
@@ -20,8 +22,10 @@ const electronCmd = runAsRoot
   : `electron ${entry}`;
 
 export const fullScriptMap = {
-  dev: `cross-env NODE_ENV=development concurrently \"tsc -w\" \"vite --config vite.config.js\" \"${electronCmd}\"`,
-  build: "vite build && tsc",
+  dev: `cross-env NODE_ENV=development concurrently "tsc -w" "vite --config vite.config.js" "${electronCmd}"`,
+  electron: "electron .",
+  start: "concurrently -k \"vite\" \"wait-on http://localhost:3000 && electron .\"",
+  build: "tsc && vite build",
   dist: "electron-builder",
   clean: "rimraf dist build .cache",
   lint: "eslint . --ext .ts,.tsx",
@@ -29,5 +33,5 @@ export const fullScriptMap = {
   test: "node --test",
   reset: "rimraf node_modules && npm install",
   dbinit: "node scripts/init-db.js",
-  start: "node dist/main.js"
+  "start-build": "node dist/main.js"
 };

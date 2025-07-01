@@ -47,14 +47,16 @@ export async function scaffoldProject(answers, options = {}) {
 
   // Define required dependencies explicitly
   const dependencies = {
-    vite: "^4.0.0",
-    "@vitejs/plugin-react": "^3.0.0",
     react: "^18.0.0",
     "react-dom": "^18.0.0",
-    electron: "^25.0.0"
+    electron: "^29.0.0"
   };
 
   const devDependencies = {
+    vite: "^4.5.14",
+    "@vitejs/plugin-react": "^3.0.0",
+    typescript: "^5.4.5",
+    "@types/node": "^20.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0"
   };
@@ -80,7 +82,7 @@ export async function scaffoldProject(answers, options = {}) {
     author: answers.author,
     license: answers.license,
     type: "module",
-    main: "dist/main.js",
+    main: "electron-main.mjs",
     scripts: {},
     dependencies: {},
     devDependencies: {},
@@ -112,12 +114,12 @@ export async function scaffoldProject(answers, options = {}) {
   if (answers.scripts.includes("clean") || answers.scripts.includes("reset")) {
     pkg.devDependencies["rimraf"] = "^6.0.1";
   }
-  if (answers.scripts.includes("dev")) {
-    pkg.devDependencies["cross-env"] = "^7.0.3";
-    pkg.devDependencies["concurrently"] = "^8.2.0";
+  if (answers.scripts.includes("start")) {
+    pkg.devDependencies.concurrently = "^8.2.2";
+    pkg.devDependencies["wait-on"] = "^7.0.1";
   }
   if (answers.scripts.includes("dev") || answers.scripts.includes("build")) {
-    pkg.devDependencies["typescript"] = "^5.4.0";
+    pkg.devDependencies.typescript = "^5.4.5";
     pkg.devDependencies["@types/node"] = "^20.0.0";
   }
 
