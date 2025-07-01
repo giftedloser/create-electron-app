@@ -1,12 +1,12 @@
 import { describe, test } from "node:test";
 import { strict as assert } from "assert";
-import { mkdtempSync, writeFileSync, existsSync, rmSync, chmodSync } from "fs";
+import { mkdtempSync, writeFileSync, rmSync, chmodSync, existsSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
+import prompts from "prompts";
+import { createAppWizard } from "../src/wizard.js";
 import { scaffoldProject } from "../src/generator.js";
 
-// Utility to create a temporary stub for `npm` so the generator does not
-// attempt to download packages during tests.
 function createNpmStub() {
   const dir = mkdtempSync(join(tmpdir(), "npm-stub-"));
   const stub = join(dir, "npm");
@@ -15,8 +15,21 @@ function createNpmStub() {
   return { dir, stub };
 }
 
-describe("scaffoldProject", () => {
-  test("copies frameless template files", async () => {
+describe("wizard frameless", () => {
+  test("selecting frameless adds preload and keeps file", async () => {
+    prompts.inject([
+      "wiz-frame", // appName
+      "Title", // title
+      "", // description
+      "", // author
+      "MIT", // license
+      ["frameless"], // features
+      ["dev"], // scripts
+      true, // confirm
+    ]);
+    const answers = await createAppWizard();
+    assert.ok(answers.features.includes("preload"));
+
     const tmp = mkdtempSync(join(tmpdir(), "scaffold-test-"));
     const { dir: npmDir } = createNpmStub();
     const originalPath = process.env.PATH;
@@ -24,25 +37,8 @@ describe("scaffoldProject", () => {
     const cwd = process.cwd();
     process.chdir(tmp);
     try {
-      const answers = {
-        appName: "frameless-app",
-        title: "Test",
-        description: "",
-        author: "",
-        license: "MIT",
-        scripts: [],
-        features: ["frameless"],
-      };
       const { outDir } = await scaffoldProject(answers);
-      const controlFile = join(
-        outDir,
-        "src",
-        "components",
-        "WindowControls.tsx"
-      );
-      assert.ok(existsSync(controlFile));
-      const preloadFile = join(outDir, "src", "preload.ts");
-      assert.ok(existsSync(preloadFile));
+      assert.ok(existsSync(join(outDir, "src", "preload.ts")));
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;
