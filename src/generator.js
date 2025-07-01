@@ -68,6 +68,7 @@ export async function scaffoldProject(answers) {
     author: answers.author,
     license: answers.license,
     type: "module",
+    main: "dist/main.js",
     scripts: {},
     dependencies: {},
     devDependencies: {},
