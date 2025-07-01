@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
+    "allowJs": true,
     "outDir": "dist",
     "baseUrl": ".",
     "jsx": "react-jsx",
