@@ -14,7 +14,7 @@ export const scriptOptions = [
 ];
 
 export const fullScriptMap = {
-  dev: "cross-env NODE_ENV=development concurrently \"vite --config vite.config.js\" \"electron .\"",
+  dev: "cross-env NODE_ENV=development concurrently \"tsc -w\" \"vite --config vite.config.js\" \"electron .\"",
   build: "vite build && tsc",
   dist: "electron-builder",
   clean: "rimraf dist build .cache",

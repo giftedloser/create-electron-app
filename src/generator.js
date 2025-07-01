@@ -105,6 +105,10 @@ export async function scaffoldProject(answers) {
     pkg.devDependencies["cross-env"] = "^7.0.3";
     pkg.devDependencies["concurrently"] = "^8.2.0";
   }
+  if (answers.scripts.includes("dev") || answers.scripts.includes("build")) {
+    pkg.devDependencies["typescript"] = "^5.4.0";
+    pkg.devDependencies["@types/node"] = "^20.0.0";
+  }
 
   try {
     await fs.writeFile(

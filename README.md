@@ -117,7 +117,7 @@ After completion, your project folder includes:
 The generated `package.json` includes helpful commands:
 
 ```bash
-npm run dev     # Start Vite and Electron in watch mode
+npm run dev     # Start TypeScript, Vite and Electron in watch mode
 npm run build   # Vite build then TypeScript compile
 npm run dist    # Package installers via electron-builder
 npm run lint    # Run ESLint
