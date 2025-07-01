@@ -193,7 +193,7 @@ If anything breaks, likely reasons:
 ## 🗺️ Repository Layout
 
 ```
-makeapp/
+create-electron-app/
 ├── bin/               # CLI entrypoint
 ├── src/               # Wizard, generator, and utilities
 ├── templates/         # Base and feature templates
