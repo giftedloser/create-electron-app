@@ -127,6 +127,13 @@ export async function createAppWizard() {
     ...mandatory.map(f => f.value),
     ...(featurePrompt.selected || []),
   ];
+  if (
+    answers.features.includes("frameless") &&
+    !answers.features.includes("preload")
+  ) {
+    answers.features.push("preload");
+    info(chalk.yellow("Preload enabled automatically for frameless windows."));
+  }
   printDivider();
 
   printStepHeader(3, totalSteps, "Dev Script Options");
