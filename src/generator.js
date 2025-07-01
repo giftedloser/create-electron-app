@@ -223,9 +223,7 @@ const extraImports = [];
 
 
 if (answers.features.includes("sso")) {
-
   extraImports.push("../auth.js");
-  extraImports.push("./auth.js");
 }
 
 if (extraImports.length > 0) {

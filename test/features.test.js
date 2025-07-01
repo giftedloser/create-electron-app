@@ -36,7 +36,8 @@ describe("scaffoldProject darkmode", () => {
       assert.ok(existsSync(file));
       const mainFile = join(outDir, "src", "main.ts");
       const main = readFileSync(mainFile, "utf8");
-      assert.match(main, /import .*['\"]\.\/darkmode\.js['\"]/);
+      const dmMatches = main.match(/import '\.\/darkmode\.js';/g) || [];
+      assert.equal(dmMatches.length, 1);
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;
@@ -69,7 +70,8 @@ describe("scaffoldProject sso", () => {
       assert.ok(existsSync(file));
       const mainFile = join(outDir, "src", "main.ts");
       const main = readFileSync(mainFile, "utf8");
-      assert.match(main, /import .*['\"]\.\.\/auth\.js['\"]/);
+      const matches = main.match(/import '\.\.\/auth\.js';/g) || [];
+      assert.equal(matches.length, 1);
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;
