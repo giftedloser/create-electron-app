@@ -35,7 +35,7 @@ describe("scaffoldProject", () => {
       const authFile = join(outDir, "auth.js");
       assert.ok(existsSync(authFile));
       const mainContent = readFileSync(join(outDir, "src", "main.ts"), "utf8");
-      assert.match(mainContent, /import\s+['"]\.\.\/auth\.js['"]/);
+      assert.match(mainContent, /import\s+['"]\.\/auth\.js['"]/);
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;

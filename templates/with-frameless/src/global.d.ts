@@ -7,6 +7,7 @@ export interface WindowControls {
 declare global {
   interface Window {
     windowControls: WindowControls;
+    api?: any;
   }
 }
 

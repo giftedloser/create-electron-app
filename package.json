@@ -8,7 +8,9 @@
   },
   "scripts": {
     "start": "node bin/index.js",
-    "test": "node --test"
+    "test": "node --test",
+    "setup": "npm install",
+    "pretest": "npm run setup"
   },
   "engines": {
     "node": ">=18"

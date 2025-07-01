@@ -180,7 +180,7 @@ export async function scaffoldProject(answers) {
 
   // Copy feature templates conditionally
   for (const feature of answers.features) {
-    if (feature === "git" || feature === "darkmode") {
+    if (feature === "git") {
       // skip features handled separately
       continue;
     }
@@ -196,14 +196,34 @@ export async function scaffoldProject(answers) {
     }
   }
 
+
+  // Copy special feature files
+  if (answers.features.includes("darkmode")) {
+    const dmSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
+    try {
+      await fs.copyFile(dmSrc, path.join(outDir, "darkmode.js"));
+      await ensureDir(path.join(outDir, "src"));
+      await fs.copyFile(dmSrc, path.join(outDir, "src", "darkmode.js"));
+    } catch {
+      // ignore copy errors
+    }
+  }
+
+  if (answers.features.includes("sso")) {
+    const ssoSrc = path.resolve(__dirname, "../templates/with-sso/auth.js");
+    try {
+      await fs.copyFile(ssoSrc, path.join(outDir, "auth.js"));
+    } catch {
+      // ignore copy errors
+    }
+  }
+
 // Conditionally inject main process imports for selected features
 const extraImports = [];
 
-if (answers.features.includes("darkmode")) {
-  extraImports.push("./darkmode.js");
-}
 
 if (answers.features.includes("sso")) {
+
   extraImports.push("../auth.js");
   extraImports.push("./auth.js");
 }
@@ -223,6 +243,7 @@ if (extraImports.length > 0) {
     // ignore file modification errors
   }
 }
+
 
   // Handle darkmode feature separately
   if (answers.features.includes("darkmode")) {

@@ -23,7 +23,7 @@
 - **SQLite** – optional local database integration
 - **SSO login** – enterprise authentication via OAuth2
 - **Dark mode** – aligns with the native OS theme
-- **Frameless window** – custom controls via `src/components/WindowControls.tsx`
+- **Frameless window** – custom controls via `src/components/WindowControls.tsx`. Selecting this option automatically enables the **Preload** feature.
 - **Packaging** – electron-builder configuration
 - **Predefined npm scripts** – dev, build, lint, format, and more
 - Fully extensible with custom templates
@@ -87,7 +87,7 @@ The wizard walks you through:
 
 - Project metadata (name, author, license, description)
 - **Mandatory features** (React, TypeScript, Electron)
-- Optional features like Preload, SQLite, SSO and dark mode
+- Optional features like Preload, SQLite, SSO and dark mode. Choosing the frameless window option will enable Preload automatically.
 - Dev tooling (ESLint, Prettier)
 - Packaging scripts
 - Window and UI options
@@ -182,6 +182,12 @@ Run the Node test suite with:
 
 ```bash
 npm test
+```
+
+Before running tests for the first time, install all project dependencies:
+
+```bash
+npm install
 ```
 
 The tests live in the `test/` directory and require **Node.js 18+**, as noted above.
