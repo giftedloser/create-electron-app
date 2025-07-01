@@ -23,6 +23,7 @@
 - **SQLite** – optional local database integration
 - **SSO stub** – placeholder for enterprise authentication
 - **Dark mode** – aligns with the native OS theme
+- **Frameless window option** – adds custom window controls on a transparent window
 - **Packaging** – electron-builder configuration
 - **Predefined npm scripts** – dev, build, lint, format, and more
 - Fully extensible with custom templates
