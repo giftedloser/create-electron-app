@@ -2,34 +2,47 @@
 
 import path from "path";
 import fs from "fs";
-import { info } from "./utils/logger.js";
+import chalk from "chalk";
+import boxen from "boxen";
 
 export async function showSummaryReport(result) {
   const { outDir, metadata, packageJson } = result;
-  info("\n✅ Project Created Successfully\n");
 
-  info("📁 Output Folder:", outDir);
-  info("\n📦 Metadata:");
-  info("  Name:", metadata.appName);
-  info("  Title:", metadata.title);
-  info("  Description:", metadata.description);
-  info("  Author:", metadata.author);
-  info("  License:", metadata.license);
+  const featureList = metadata.features.map(f => `- ${f}`).join("\n");
+  const scriptList = Object.entries(packageJson.scripts)
+    .map(([key, val]) => `${key}: ${val}`)
+    .join("\n");
 
-  info("\n🧱 Selected Features:");
-  metadata.features.forEach(f => info("  -", f));
+  const summary = `
+${chalk.bold.green('Project Created Successfully')}
 
-  info("\n🧰 Scripts Included:");
-  Object.entries(packageJson.scripts).forEach(([key, val]) => {
-    info(`  ${key}: ${val}`);
-  });
+${chalk.bold('Output Folder')}: ${outDir}
+
+${chalk.underline('Metadata')}
+Name: ${metadata.appName}
+Title: ${metadata.title}
+Description: ${metadata.description}
+Author: ${metadata.author}
+License: ${metadata.license}
+
+${chalk.underline('Selected Features')}
+${featureList}
+
+${chalk.underline('Scripts Included')}
+${scriptList}
+
+${chalk.underline('Next Steps')}
+cd ${metadata.appName}
+npm run dev
+`;
+
+  console.log(boxen(summary.trim(), { padding: 1, borderColor: 'green', margin: 1 }));
 
   const readmePath = path.join(outDir, "README.md");
   if (!fs.existsSync(readmePath)) {
-    fs.writeFileSync(readmePath, `# ${metadata.appName}\n\n${metadata.description}\n`);
+    fs.writeFileSync(
+      readmePath,
+      `# ${metadata.appName}\n\n${metadata.description}\n`
+    );
   }
-
-  info("\n📌 Next Steps:");
-  info(`  cd ${metadata.appName}`);
-  info("  npm run dev");
 }
