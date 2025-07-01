@@ -153,6 +153,22 @@ export async function createAppWizard() {
     min: 1,
   }, { onCancel });
   Object.assign(answers, scriptPrompt);
+
+  if (
+    answers.scripts.includes("lint") &&
+    !answers.features.includes("eslint")
+  ) {
+    answers.features.push("eslint");
+    info(chalk.yellow("ESLint feature added because lint script selected."));
+  }
+
+  if (
+    answers.scripts.includes("format") &&
+    !answers.features.includes("prettier")
+  ) {
+    answers.features.push("prettier");
+    info(chalk.yellow("Prettier feature added because format script selected."));
+  }
   printDivider();
 
   printStepHeader(4, totalSteps, "Summary & Confirm");
