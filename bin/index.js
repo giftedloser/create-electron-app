@@ -52,7 +52,8 @@ async function main() {
 
     const answers = await createAppWizard();
 
-    const result = await scaffoldProject(answers);
+    const skipInstall = process.env.SKIP_INSTALL === "1";
+    const result = await scaffoldProject(answers, { skipInstall });
 
     await showSummaryReport(result);
 

@@ -10,7 +10,8 @@ import { execa } from "execa";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export async function scaffoldProject(answers) {
+export async function scaffoldProject(answers, options = {}) {
+  const { skipInstall = false } = options;
   const outDir = path.resolve(process.cwd(), answers.appName);
 
   // helper to remove the project directory on failure
@@ -319,12 +320,16 @@ if (extraImports.length > 0) {
 
   // Install dependencies using chosen package manager
   const pm = answers.packageManager || "npm";
-  try {
-    info("🔧 Installing dependencies...");
-    await execa(pm, ["install"], { cwd: outDir, stdio: "inherit" });
-  } catch (e) {
-    await cleanupProject();
-    throw new Error(`${pm} install failed: ${e.message}. Project directory cleaned up.`);
+  if (!skipInstall) {
+    try {
+      info("🔧 Installing dependencies...");
+      await execa(pm, ["install"], { cwd: outDir, stdio: "inherit" });
+    } catch (e) {
+      await cleanupProject();
+      throw new Error(`${pm} install failed: ${e.message}. Project directory cleaned up.`);
+    }
+  } else {
+    info("⚠️  Skipping dependency installation (SKIP_INSTALL)");
   }
 
   // Initialize Git repo if selected
