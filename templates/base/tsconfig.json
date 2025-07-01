@@ -9,7 +9,7 @@
     "outDir": "dist",
     "baseUrl": ".",
     "jsx": "react-jsx",
-    "types": ["vite/client", "node"]
+    "types": ["node", "vite/client"]
   },
   "include": [
     "src",

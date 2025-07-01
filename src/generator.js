@@ -252,6 +252,7 @@ if (extraImports.length > 0) {
       "../templates/with-darkmode/src/darkmode.js"
     );
     const darkDestSrc = path.join(outDir, "src", "darkmode.js");
+    const darkDestRoot = path.join(outDir, "src", "darkmode.js");
     try {
       await fs.copyFile(darkSrc, darkDestSrc);
     } catch (e) {
@@ -352,7 +353,7 @@ if (extraImports.length > 0) {
       info("🔧 Initializing Git repository...");
       await execa("git", ["init"], { cwd: outDir });
       await execa("git", ["add", "."], { cwd: outDir });
-      await execa("git", ["commit", "-m", "Initial scaffold commit"], { cwd: outDir });
+      await execa("git", ["commit", "-m", "Initial commit"], { cwd: outDir });
     } catch (e) {
       // remove .git to avoid half-baked repo
       try {
