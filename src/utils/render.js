@@ -16,7 +16,7 @@ export async function renderTemplateFiles(dir, tokens) {
   const files = await listAllFiles(dir);
   for (const file of files) {
     const ext = path.extname(file);
-    if ([".js", ".ts", ".json", ".html", ".md", ".yml", ".yaml"].includes(ext)) {
+    if ([".js", ".ts", ".tsx", ".json", ".html", ".md", ".yml", ".yaml"].includes(ext)) {
       let content = await fs.readFile(file, "utf-8");
       for (const [key, val] of Object.entries(tokens)) {
         const pattern = new RegExp(`{{\s*${key}\s*}}`, "g");

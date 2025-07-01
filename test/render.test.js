@@ -14,4 +14,13 @@ describe('renderTemplateFiles', () => {
     const result = readFileSync(file, 'utf8');
     assert.equal(result, 'Hello World');
   });
+
+  test('replaces tokens in TSX files', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'render-test-'));
+    const file = join(dir, 'component.tsx');
+    writeFileSync(file, '<div>{{GREETING}}</div>');
+    await renderTemplateFiles(dir, { GREETING: 'Hi' });
+    const result = readFileSync(file, 'utf8');
+    assert.equal(result, '<div>Hi</div>');
+  });
 });
