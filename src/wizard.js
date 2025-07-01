@@ -134,6 +134,13 @@ export async function createAppWizard() {
     answers.features.push("preload");
     info(chalk.yellow("Preload enabled automatically for frameless windows."));
   }
+  if (
+    answers.features.includes("darkmode") &&
+    !answers.features.includes("preload")
+  ) {
+    answers.features.push("preload");
+    info(chalk.yellow("Preload enabled automatically for dark mode."));
+  }
   printDivider();
 
   printStepHeader(3, totalSteps, "Dev Script Options");
