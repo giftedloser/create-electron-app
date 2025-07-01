@@ -128,9 +128,9 @@ import App from "./App";
 ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
 ```
 
-### 4. `public/index.html`
+### 4. `index.html`
 
-(Must stay in `public/`, not `src/`)
+(Place at the project root)
 
 ```html
 <!DOCTYPE html>
@@ -156,7 +156,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
 | ----------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------ |
 | `preload: ${__dirname}` error | TS doesn't allow template literals                           | Used `path.join(__dirname, "preload.js")`                                |
 | HTML parse5 errors            | Double-quoted attributes from PowerShell `@""` heredoc       | Switched to proper HTML escaping                                         |
-| `/src/main.tsx` not found     | `index.html` moved to `src/` instead of staying in `public/` | Ensured `index.html` is in `public/`                                     |
+| `/src/main.tsx` not found     | `index.html` moved to `src/` instead of project root | Place `index.html` in project root |
 | `npm run start` fails         | No compiled `dist/main.js`                                  | `npm run build` must succeed and output must match `start` script target |
 
 ---
