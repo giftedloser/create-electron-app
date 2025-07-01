@@ -23,6 +23,7 @@
 - **SQLite** – optional local database integration
 - **SSO login** – enterprise authentication via OAuth2
 - **Dark mode** – aligns with the native OS theme
+- **Frameless window** – custom controls via `src/components/WindowControls.tsx`
 - **Packaging** – electron-builder configuration
 - **Predefined npm scripts** – dev, build, lint, format, and more
 - Fully extensible with custom templates
