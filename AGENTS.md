@@ -3,7 +3,7 @@
 ### 🔰 CLI OVERVIEW
 
 * CLI Name: `create-electron-app` (global binary installed via `bin/index.js`)
-* Tech: Node.js (ESM), `enquirer` for prompts, modular scaffold logic
+* Tech: Node.js (ESM), `prompts` for prompts, modular scaffold logic
 * Run anywhere from terminal: `create-electron-app`
 * Generates fully working Electron app (Vite+React+TS) into CWD
 * Output folder: `${cwd}/${appName}`
