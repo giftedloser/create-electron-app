@@ -58,6 +58,7 @@ export async function scaffoldProject(answers) {
         "@typescript-eslint/eslint-plugin": "^6.7.0",
       },
     },
+    sso: { dependencies: { "node-fetch": "^3.3.2" } },
   };
 
   // Build package.json with selected scripts and dependencies
@@ -185,27 +186,32 @@ export async function scaffoldProject(answers) {
     }
   }
 
-  // Add main process imports for certain features
-  const extraImports = [];
-  if (answers.features.includes("darkmode")) {
-    extraImports.push("./darkmode.js");
+// Conditionally inject main process imports for selected features
+const extraImports = [];
+
+if (answers.features.includes("darkmode")) {
+  extraImports.push("./darkmode.js");
+}
+
+if (answers.features.includes("sso")) {
+  extraImports.push("./auth.js");
+}
+
+if (extraImports.length > 0) {
+  try {
+    let mainContent = await fs.readFile(mainFile, "utf8");
+    const lines = mainContent.split(/\r?\n/);
+    let insertIdx = lines.findIndex((l) => !/^import /.test(l));
+    if (insertIdx === -1) insertIdx = lines.length;
+    for (const imp of extraImports) {
+      lines.splice(insertIdx, 0, `import '${imp}';`);
+      insertIdx++;
+    }
+    await fs.writeFile(mainFile, lines.join("\n"));
+  } catch {
+    // ignore file modification errors
   }
-  if (answers.features.includes("sso")) {
-    extraImports.push("./auth.js");
-  }
-  if (extraImports.length > 0) {
-    try {
-      let mainContent = await fs.readFile(mainFile, "utf8");
-      const lines = mainContent.split(/\r?\n/);
-      let insertIdx = lines.findIndex((l) => !/^import /.test(l));
-      if (insertIdx === -1) insertIdx = lines.length;
-      for (const imp of extraImports) {
-        lines.splice(insertIdx, 0, `import '${imp}';`);
-        insertIdx++;
-      }
-      await fs.writeFile(mainFile, lines.join("\n"));
-    } catch {
-      // ignore modification errors
+}
 
     }
   }
