@@ -133,6 +133,7 @@ export async function createAppWizard() {
     !answers.features.includes("preload")
   ) {
     answers.features.push("preload");
+    answers.autoPreload = true;
     info(chalk.yellow("Preload enabled automatically for frameless windows."));
   }
   if (
@@ -140,6 +141,7 @@ export async function createAppWizard() {
     !answers.features.includes("preload")
   ) {
     answers.features.push("preload");
+    answers.autoPreload = true;
     info(chalk.yellow("Preload enabled automatically for dark mode."));
   }
   printDivider();

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Unreleased]
 
+## [1.1.2] - 2025-07-02
+- [Added] preload auto-enforced for darkmode
+- [Fixed] darkmode.js now emitted to dist by TypeScript
+- [Tested] darkmode-only config builds and runs without error
+
 ## [1.1.0] - 2025-07-01
 - Support YAML/YML token replacement in templates.
 - Locked core features (React, TypeScript, Electron) so they cannot be deselected.

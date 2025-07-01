@@ -8,7 +8,9 @@ import boxen from "boxen";
 export async function showSummaryReport(result) {
   const { outDir, metadata, packageJson } = result;
 
-  const featureList = metadata.features.map(f => `- ${f}`).join("\n");
+  const featureList = metadata.features
+    .map((f) => `- ${f === "preload" && metadata.autoPreload ? "preload (auto)" : f}`)
+    .join("\n");
   const scriptList = Object.entries(packageJson.scripts)
     .map(([key, val]) => `${key}: ${val}`)
     .join("\n");

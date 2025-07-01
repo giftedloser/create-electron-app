@@ -6,13 +6,13 @@
     "allowJs": true,
     "strict": true,
     "esModuleInterop": true,
-    "allowJs": true,
     "outDir": "dist",
     "baseUrl": ".",
     "jsx": "react-jsx",
     "types": ["vite/client", "node"]
   },
   "include": [
+    "src",
     "src/**/*.ts",
     "src/**/*.js",
     "src/global.d.ts"
