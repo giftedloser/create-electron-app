@@ -30,7 +30,7 @@ describe("tsconfig", () => {
         author: "",
         license: "MIT",
         scripts: [],
-        features: [],
+        features: ["preload"],
       };
       const { outDir } = await scaffoldProject(answers);
       process.env.PATH = originalPath;
@@ -44,6 +44,8 @@ describe("tsconfig", () => {
           "declare module 'react-dom';",
           "declare module 'react-dom/client';",
           "declare module 'vite/client';",
+          "declare global { interface Window { api: any } }",
+          "export {};",
           "",
         ].join("\n")
       );
