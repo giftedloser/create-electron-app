@@ -53,7 +53,7 @@ Each feature corresponds to `templates/with-<feature>/`:
 ```json
 "scripts": {
 
-  "dev": "cross-env NODE_ENV=development concurrently \"vite --config vite.config.js\" \"electron .\"",
+  "dev": "cross-env NODE_ENV=development concurrently \"tsc -w\" \"vite --config vite.config.js\" \"electron .\"",
   "build": "vite build && tsc",
   "dist": "electron-builder",
   "clean": "rimraf dist build .cache",
@@ -65,7 +65,7 @@ Each feature corresponds to `templates/with-<feature>/`:
 }
 ```
 
-*The `dev` script relies on the `concurrently` and `cross-env` packages to run Vite and Electron in parallel while setting `NODE_ENV`. Include these as development dependencies.*
+*The `dev` script relies on `concurrently` and `cross-env` to run `tsc -w`, Vite and Electron in parallel while setting `NODE_ENV`. Include these as development dependencies.*
 
 ---
 
