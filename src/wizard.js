@@ -7,7 +7,7 @@ import { scriptOptions } from "./config/scripts.js";
 import { info } from "./utils/logger.js";
 
 function printWelcome() {
-  const msg = `${chalk.bold("create-my-electron-app")}\nA friendly wizard to scaffold your Electron project.`;
+  const msg = `${chalk.bold("create-electron-app")}\nA friendly wizard to scaffold your Electron project.`;
   info(boxen(msg, { padding: 1, borderColor: "cyan", margin: 1 }));
   info(chalk.gray("Use arrow keys to navigate, space to select, enter to confirm.\n"));
 }
