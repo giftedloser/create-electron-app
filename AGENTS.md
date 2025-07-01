@@ -215,4 +215,10 @@ Template files may contain tokens such as `{{APP_NAME}}` or `{{WINDOW_TITLE}}`. 
 
 The generator will automatically copy the template folder, install declared packages, and inject tokens.
 
+### CLI Flags & Auto-Enabled Features
+
+- `--answers <file>` – Noninteractive mode using a JSON file of wizard answers.
+- `--no-prompt` – Fail if prompts would be shown. Must be used with `--answers`.
+- Selecting `darkmode` or `frameless` auto-adds the `preload` feature. The summary report denotes this as `preload (auto)`.
+
 

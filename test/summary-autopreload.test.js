@@ -1,9 +1,10 @@
 import { describe, test } from "node:test";
 import { strict as assert } from "assert";
-import { mkdtempSync, writeFileSync, existsSync, rmSync, chmodSync, readFileSync } from "fs";
+import { mkdtempSync, writeFileSync, rmSync, chmodSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import { scaffoldProject } from "../src/generator.js";
+import { showSummaryReport } from "../src/report.js";
 
 function createNpmStub() {
   const dir = mkdtempSync(join(tmpdir(), "npm-stub-"));
@@ -13,8 +14,8 @@ function createNpmStub() {
   return { dir, stub };
 }
 
-describe("darkmode feature", () => {
-  test("copies darkmode files and injects import", async () => {
+describe("summary", () => {
+  test("preload flagged as auto", async () => {
     const tmp = mkdtempSync(join(tmpdir(), "scaffold-test-"));
     const { dir: npmDir } = createNpmStub();
     const originalPath = process.env.PATH;
@@ -23,7 +24,7 @@ describe("darkmode feature", () => {
     process.chdir(tmp);
     try {
       const answers = {
-        appName: "dark-app",
+        appName: "sum-app",
         title: "Test",
         description: "",
         author: "",
@@ -31,13 +32,13 @@ describe("darkmode feature", () => {
         scripts: [],
         features: ["darkmode"],
       };
-      const { outDir, metadata } = await scaffoldProject(answers);
-      const file = join(outDir, "darkmode.js");
-      assert.ok(existsSync(file));
-      const mainFile = readFileSync(join(outDir, "src", "main.ts"), "utf8");
-      assert.match(mainFile, /await import\('\.\/darkmode\.js'\)/);
-      assert.ok(existsSync(join(outDir, "src", "preload.ts")));
-      assert.ok(metadata.features.includes("preload"));
+      const result = await scaffoldProject(answers);
+      let output = "";
+      const orig = console.log;
+      console.log = (msg) => { output += msg; };
+      await showSummaryReport(result);
+      console.log = orig;
+      assert.match(output, /preload \(auto\)/);
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;

@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import { fullScriptMap } from "./config/scripts.js";
 import { copyDirRecursive, ensureDir } from "./utils/fileOps.js";
 import { renderTemplateFiles } from "./utils/render.js";
-import { info, warn } from "./utils/logger.js";
+import { info, warn, error } from "./utils/logger.js";
 import { execa } from "execa";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -41,6 +41,7 @@ export async function scaffoldProject(answers, options = {}) {
     !answers.features.includes("preload")
   ) {
     answers.features.push("preload");
+    answers.autoPreload = true;
     info("Preload feature enabled automatically.");
   }
 
@@ -254,8 +255,15 @@ if (extraImports.length > 0) {
     const darkDestRoot = path.join(outDir, "darkmode.js");
     try {
       await fs.copyFile(darkSrc, darkDestSrc);
+    } catch (e) {
+      error(`Failed copying darkmode.js to ${darkDestSrc}: ${e.message}`);
+      await cleanupProject();
+      throw new Error(`Failed copying darkmode.js: ${e.message}`);
+    }
+    try {
       await fs.copyFile(darkSrc, darkDestRoot);
     } catch (e) {
+      error(`Failed copying darkmode.js to ${darkDestRoot}: ${e.message}`);
       await cleanupProject();
       throw new Error(`Failed copying darkmode.js: ${e.message}`);
     }
@@ -309,7 +317,14 @@ if (extraImports.length > 0) {
       DESCRIPTION: answers.description,
       FRAMELESS: answers.features.includes("frameless") ? "true" : "false",
       DARKMODE_IMPORT: answers.features.includes("darkmode")
-        ? "import './darkmode.js';"
+        ? [
+            "try {",
+            "  await import('./darkmode.js');",
+            "} catch {",
+            "  console.error('Missing dist/darkmode.js. Ensure allowJs is enabled in tsconfig.json and darkmode.js is placed under src.');",
+            "  process.exit(1);",
+            "}",
+          ].join("\n")
         : "",
     };
     await renderTemplateFiles(outDir, tokens);

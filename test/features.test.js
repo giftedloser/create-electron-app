@@ -36,8 +36,7 @@ describe("scaffoldProject darkmode", () => {
       assert.ok(existsSync(file));
       const mainFile = join(outDir, "src", "main.ts");
       const main = readFileSync(mainFile, "utf8");
-      const dmMatches = main.match(/import '\.\/darkmode\.js';/g) || [];
-      assert.equal(dmMatches.length, 1);
+      assert.match(main, /await import\('\.\/darkmode\.js'\)/);
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;

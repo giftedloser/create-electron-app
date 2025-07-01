@@ -85,10 +85,10 @@ create-electron-app --version
 
 Running `create-electron-app` with no arguments starts the interactive wizard.
 
-For automated environments, supply a JSON answers file using `--answers` to skip prompts:
+For automated environments, supply a JSON answers file using `--answers` to skip prompts. Combine with `--no-prompt` to enforce noninteractive mode:
 
 ```bash
-create-electron-app my-app --answers ./answers.json
+create-electron-app my-app --answers ./answers.json --no-prompt
 ```
 
 The CLI aborts if no TTY is available and no answers file is provided.
@@ -98,6 +98,7 @@ The wizard walks you through:
 - Project metadata (name, author, license, description)
 - **Mandatory features** (React, TypeScript, Electron)
 - Optional features like Preload, SQLite, SSO and dark mode. Choosing the frameless window or dark mode option will enable Preload automatically.
+- When Preload is auto-enabled, the summary report lists it as `preload (auto)`.
 - Choose your preferred package manager (npm, yarn or pnpm)
 - Dev tooling (ESLint, Prettier)
 - Packaging scripts
