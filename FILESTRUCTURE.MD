@@ -1,4 +1,6 @@
-'''create-electron-app/
+'''
+
+create-electron-app/
 ├── bin/                      # CLI entrypoint
 │   └── index.js              # Main executable for `create-electron-app`
 │
