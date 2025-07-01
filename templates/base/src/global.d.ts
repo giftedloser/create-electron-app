@@ -1,7 +1,7 @@
 
 interface PreloadAPI {
   getDarkMode?: () => Promise<boolean>;
-  on: (channel: string, listener: (...args: unknown[]) => void) => void;
+  on: (channel: string, listener: (...args: any[]) => void) => void;
   send: (channel: string, data?: unknown) => void;
   [key: string]: unknown;
 }
