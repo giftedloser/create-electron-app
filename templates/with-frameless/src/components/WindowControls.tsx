@@ -7,21 +7,21 @@ style={{ WebkitAppRegion: "drag", backgroundColor: "transparent" }}
     >
       <button
         className="px-2"
-        onClick={() => window.windowControls.minimize()}
+        onClick={() => window.api?.windowControls.minimize()}
         style={{ WebkitAppRegion: "no-drag" }}
       >
         –
       </button>
       <button
         className="px-2"
-        onClick={() => window.windowControls.maximize()}
+        onClick={() => window.api?.windowControls.maximize()}
         style={{ WebkitAppRegion: "no-drag" }}
       >
         ⬜
       </button>
       <button
         className="px-2 text-red-500"
-        onClick={() => window.windowControls.close()}
+        onClick={() => window.api?.windowControls.close()}
         style={{ WebkitAppRegion: "no-drag" }}
       >
         ✕

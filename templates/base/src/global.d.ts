@@ -1,7 +1,7 @@
 
 declare global {
   interface Window {
-    api?: any;
+    api: any;
   }
 }
 export {};
