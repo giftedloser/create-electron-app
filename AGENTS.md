@@ -65,7 +65,7 @@ Each feature corresponds to `templates/with-<feature>/`:
 }
 ```
 
-*The `dev` script relies on `concurrently` and `cross-env` to run `tsc -w`, Vite and Electron in parallel while setting `NODE_ENV`. Include these as development dependencies.*
+*The `dev` script relies on `concurrently` and `cross-env` to run `tsc -w`, Vite and Electron in parallel while setting `NODE_ENV`. Include these as development dependencies. The watch mode means TypeScript rebuilds automatically whenever source files change.*
 
 ---
 
