@@ -13,7 +13,8 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
     rollupOptions: {
-      input: path.resolve(__dirname, 'public/index.html'),
+      // Use the root index.html as the build entry
+      input: path.resolve(__dirname, 'index.html'),
     },
   },
   server: {
