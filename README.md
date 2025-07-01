@@ -8,7 +8,7 @@
 
 ## Requirements
 
-- Node.js **18+**
+- Node.js **18+** (the CLI exits with an error on older versions)
 - macOS, Windows and Linux are supported
 
 ---
