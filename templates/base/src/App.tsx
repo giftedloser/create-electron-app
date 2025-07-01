@@ -5,7 +5,8 @@ export default function App() {
 
   useEffect(() => {
     window.api?.getDarkMode?.().then((dark: boolean) => setIsDark(dark));
-    window.api?.on('darkmode-updated', (dark: boolean) => {
+    window.api?.on('darkmode-updated', (...args: unknown[]) => {
+      const dark = args[0] as boolean;
       setIsDark(dark);
     });
   }, []);
