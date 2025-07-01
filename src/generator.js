@@ -131,6 +131,7 @@ export async function scaffoldProject(answers) {
   // Include preload script only if feature selected
   const preloadFile = path.join(outDir, "src", "preload.ts");
   const mainFile = path.join(outDir, "src", "main.ts");
+  const appFile = path.join(outDir, "src", "App.tsx");
   const usingPreload = answers.features.includes("preload") || answers.features.includes("frameless");
   if (!usingPreload) {
     try {
@@ -165,6 +166,15 @@ export async function scaffoldProject(answers) {
       await fs.writeFile(mainFile, lines.join("\n"));
     } catch {
       // ignore modification errors
+    }
+
+    // Remove window.api effect block from App.tsx
+    try {
+      let appContent = await fs.readFile(appFile, "utf8");
+      appContent = appContent.replace(/\s*useEffect\(\(\) => {[\s\S]*?}\s*,\s*\[\]\);?/m, "");
+      await fs.writeFile(appFile, appContent);
+    } catch {
+      // ignore errors
     }
   }
 
@@ -213,7 +223,7 @@ const extraImports = [];
 
 
 if (answers.features.includes("sso")) {
-  // support both relative paths for tests
+
   extraImports.push("../auth.js");
   extraImports.push("./auth.js");
 }
@@ -233,6 +243,21 @@ if (extraImports.length > 0) {
     // ignore file modification errors
   }
 }
+
+
+  // Handle darkmode feature separately
+  if (answers.features.includes("darkmode")) {
+    const darkSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
+    const darkDestSrc = path.join(outDir, "src", "darkmode.js");
+    const darkDestRoot = path.join(outDir, "darkmode.js");
+    try {
+      await fs.copyFile(darkSrc, darkDestSrc);
+      await fs.copyFile(darkSrc, darkDestRoot);
+    } catch (e) {
+      await cleanupProject();
+      throw new Error(`Failed copying darkmode.js: ${e.message}`);
+    }
+  }
 
 
   // Include electron-builder config if dist script selected
@@ -270,6 +295,7 @@ if (extraImports.length > 0) {
       WINDOW_TITLE: answers.title,
       AUTHOR: answers.author,
       LICENSE: answers.license,
+      DESCRIPTION: answers.description,
       FRAMELESS: answers.features.includes("frameless") ? "true" : "false",
       DARKMODE_IMPORT: answers.features.includes("darkmode")
         ? "import './darkmode.js';"
