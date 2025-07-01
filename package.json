@@ -10,7 +10,7 @@
     "start": "node bin/index.js",
     "test": "node --test",
     "setup": "npm install",
-    "pretest": "npm run setup"
+    "pretest": "node -e \"if(!process.env.SKIP_SETUP){require('child_process').execSync('npm run setup',{stdio:'inherit'})}\""
   },
   "engines": {
     "node": ">=18"
