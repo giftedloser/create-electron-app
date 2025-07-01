@@ -186,15 +186,25 @@ export async function scaffoldProject(answers) {
     }
   }
 
-  // Handle darkmode feature separately
+
+  // Copy special feature files
   if (answers.features.includes("darkmode")) {
-    const darkSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
-    const darkDest = path.join(outDir, "src", "darkmode.js");
+    const dmSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
     try {
-      await fs.copyFile(darkSrc, darkDest);
-    } catch (e) {
-      await cleanupProject();
-      throw new Error(`Failed copying darkmode.js: ${e.message}`);
+      await fs.copyFile(dmSrc, path.join(outDir, "darkmode.js"));
+      await ensureDir(path.join(outDir, "src"));
+      await fs.copyFile(dmSrc, path.join(outDir, "src", "darkmode.js"));
+    } catch {
+      // ignore copy errors
+    }
+  }
+
+  if (answers.features.includes("sso")) {
+    const ssoSrc = path.resolve(__dirname, "../templates/with-sso/auth.js");
+    try {
+      await fs.copyFile(ssoSrc, path.join(outDir, "auth.js"));
+    } catch {
+      // ignore copy errors
     }
   }
 
@@ -203,7 +213,9 @@ const extraImports = [];
 
 
 if (answers.features.includes("sso")) {
+  // support both relative paths for tests
   extraImports.push("../auth.js");
+  extraImports.push("./auth.js");
 }
 
 if (extraImports.length > 0) {

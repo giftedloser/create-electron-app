@@ -184,6 +184,12 @@ Run the Node test suite with:
 npm test
 ```
 
+Before running tests for the first time, install all project dependencies:
+
+```bash
+npm install
+```
+
 The tests live in the `test/` directory and require **Node.js 18+**, as noted above.
 
 
