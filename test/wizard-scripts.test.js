@@ -60,6 +60,7 @@ describe("wizard script dependencies", () => {
     try {
       const { outDir } = await scaffoldProject(answers);
       assert.ok(existsSync(join(outDir, ".prettierrc")));
+      assert.ok(existsSync(join(outDir, ".prettierignore")));
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;
