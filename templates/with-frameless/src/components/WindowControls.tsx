@@ -1,8 +1,9 @@
 export default function WindowControls() {
   return (
     <div
-      className="flex justify-end gap-2 p-1 bg-transparent text-white select-none"
-      style={{ WebkitAppRegion: "drag", backgroundColor: "transparent" }}
+className="flex justify-end gap-2 p-1 bg-transparent text-white select-none"
+style={{ WebkitAppRegion: "drag", backgroundColor: "transparent" }}
+
     >
       <button
         className="px-2"
