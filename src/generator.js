@@ -58,6 +58,7 @@ export async function scaffoldProject(answers) {
         "@typescript-eslint/eslint-plugin": "^6.7.0",
       },
     },
+    sso: { dependencies: { "node-fetch": "^3.3.2" } },
   };
 
   // Build package.json with selected scripts and dependencies
@@ -182,6 +183,19 @@ export async function scaffoldProject(answers) {
       await copyDirRecursive(featureTemplateDir, outDir);
     } catch {
       // No template for feature; silently continue
+    }
+  }
+
+  // If SSO is enabled, import the auth helper in the main process
+  if (answers.features.includes("sso")) {
+    try {
+      let mainContent = await fs.readFile(mainFile, "utf8");
+      const lines = mainContent.split(/\r?\n/);
+      const lastImport = lines.reduce((idx, line, i) => (/^import\s/.test(line) ? i : idx), -1);
+      lines.splice(lastImport + 1, 0, "import '../auth.js';");
+      await fs.writeFile(mainFile, lines.join("\n"));
+    } catch {
+      // ignore file modification errors
     }
   }
 

@@ -133,6 +133,16 @@ const allowedReceiveChannels = ['fromMain', 'settings:changed'];
 
 This pattern keeps the IPC surface minimal and secure.
 
+## Environment Variables
+
+The SSO feature relies on several variables:
+
+- `SSO_AUTH_URL` – OAuth2 authorization endpoint
+- `SSO_TOKEN_URL` – token exchange endpoint
+- `SSO_CLIENT_ID` – application client ID
+- `SSO_CLIENT_SECRET` – client secret
+- `SSO_REDIRECT_URI` – redirect URL (default `http://localhost:4280/callback`)
+
 ---
 
 ## Packaging
