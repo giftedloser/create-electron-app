@@ -17,6 +17,9 @@ export const api = {
       ipcRenderer.on(channel, (_event, ...args) => listener(...args));
     }
   },
+  getDarkMode() {
+    return ipcRenderer.invoke('darkmode-get');
+  },
 };
 
 contextBridge.exposeInMainWorld('api', api);

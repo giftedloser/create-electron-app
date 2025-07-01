@@ -139,6 +139,24 @@ const allowedReceiveChannels = ['fromMain', 'settings:changed'];
 
 This pattern keeps the IPC surface minimal and secure.
 
+## Dark Mode API
+
+When the dark mode feature is selected, the preload script provides a
+`getDarkMode()` method. It returns a promise resolving to `true` when the
+operating system is using a dark theme:
+
+```ts
+const isDark = await window.api.getDarkMode();
+```
+
+Listen for the `darkmode-updated` event to react to changes:
+
+```ts
+window.api.on('darkmode-updated', (isDark) => {
+  // update UI
+});
+```
+
 ## Environment Variables
 
 The SSO feature relies on several variables:
