@@ -34,6 +34,7 @@ if (args.includes("-v") || args.includes("--version")) {
 if (args.includes("-h") || args.includes("--help")) {
   console.log("Usage: create-electron-app [options]\n" +
     "Run without options to start the interactive wizard.\n" +
+    "The wizard lets you choose npm, yarn or pnpm for dependency installation.\n" +
     "  -h, --help     Show this help\n" +
     "  -v, --version  Show CLI version");
   process.exit(0);

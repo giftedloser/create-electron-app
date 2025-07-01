@@ -24,6 +24,7 @@ describe("wizard frameless", () => {
       "", // author
       "MIT", // license
       ["frameless"], // features
+      "npm",
       ["dev"], // scripts
       true, // confirm
     ]);

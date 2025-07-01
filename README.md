@@ -90,6 +90,7 @@ The wizard walks you through:
 - Project metadata (name, author, license, description)
 - **Mandatory features** (React, TypeScript, Electron)
 - Optional features like Preload, SQLite, SSO and dark mode. Choosing the frameless window or dark mode option will enable Preload automatically.
+- Choose your preferred package manager (npm, yarn or pnpm)
 - Dev tooling (ESLint, Prettier)
 - Packaging scripts
 - Window and UI options
