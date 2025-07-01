@@ -189,9 +189,6 @@ export async function scaffoldProject(answers) {
 // Conditionally inject main process imports for selected features
 const extraImports = [];
 
-if (answers.features.includes("darkmode")) {
-  extraImports.push("./darkmode.js");
-}
 
 if (answers.features.includes("sso")) {
   extraImports.push("./auth.js");
