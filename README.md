@@ -113,7 +113,7 @@ The generated `package.json` includes helpful commands:
 
 ```bash
 npm run dev     # Start Vite and Electron in watch mode
-npm run build   # TypeScript compile and Vite build
+npm run build   # Vite build then TypeScript compile
 npm run dist    # Package installers via electron-builder
 npm run lint    # Run ESLint
 npm run format  # Run Prettier

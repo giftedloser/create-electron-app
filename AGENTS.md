@@ -52,7 +52,7 @@ Each feature corresponds to `templates/with-<feature>/`:
 ```json
 "scripts": {
   "dev": "vite --config vite.config.js && electron .",
-  "build": "tsc && vite build",
+  "build": "vite build && tsc",
   "dist": "electron-builder",
   "clean": "rimraf dist build .cache",
   "lint": "eslint . --ext .ts,.tsx",
