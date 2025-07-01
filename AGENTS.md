@@ -42,7 +42,7 @@ Each feature corresponds to `templates/with-<feature>/`:
 * `eslint`: `.eslintrc.js`
 * `prettier`: `.prettierrc`
 * `sqlite`: `sqlite3`, `scripts/init-db.js`
-* `sso`: creates stub file for AD/SSO
+* `sso`: creates login handler for AD/SSO
 * `darkmode`: adds `darkmode.js`
 
 ---
