@@ -227,6 +227,9 @@ Contributions and issues welcome! Please:
 * Create feature branches
 * Submit pull requests with tests and documentation updates
 * Adhere to existing code style and lint rules
+* Run `npm install` once before executing the test suite. The `pretest` script
+  will reinstall dependencies unless the `SKIP_SETUP` environment variable is
+  set.
 
 ---
 
