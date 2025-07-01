@@ -1,8 +1,9 @@
 import { describe, test } from "node:test";
 import { strict as assert } from "assert";
-import { mkdtempSync, writeFileSync, rmSync, chmodSync } from "fs";
+import { mkdtempSync, writeFileSync, rmSync, chmodSync, mkdirSync, cpSync } from "fs";
 import { tmpdir } from "os";
-import { join } from "path";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 import { execa } from "execa";
 import { scaffoldProject } from "../src/generator.js";
 
@@ -12,6 +13,23 @@ function createNpmStub() {
   writeFileSync(stub, "#!/bin/sh\nexit 0\n");
   chmodSync(stub, 0o755);
   return { dir, stub };
+}
+
+function copyPackageFixtures(outDir) {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const fixtures = join(__dirname, "fixtures");
+  const pkgs = ["typescript", "vite", "@types/node"];
+  for (const pkg of pkgs) {
+    const src = join(fixtures, pkg);
+    const dest = join(outDir, "node_modules", pkg);
+    cpSync(src, dest, { recursive: true });
+  }
+  const binDir = join(outDir, "node_modules", ".bin");
+  mkdirSync(binDir, { recursive: true });
+  cpSync(join(fixtures, "typescript", "tsc.js"), join(binDir, "tsc"));
+  chmodSync(join(binDir, "tsc"), 0o755);
+  cpSync(join(fixtures, "vite", "vite.js"), join(binDir, "vite"));
+  chmodSync(join(binDir, "vite"), 0o755);
 }
 
 describe("tsconfig", () => {
@@ -50,11 +68,7 @@ describe("tsconfig", () => {
         ].join("\n")
       );
 
-      await execa(
-        "npm",
-        ["install", "--silent", "typescript", "@types/node", "vite"],
-        { cwd: outDir }
-      );
+      copyPackageFixtures(outDir);
 
       const { stdout } = await execa("npx", ["tsc", "--noEmit"], { cwd: outDir });
       assert.equal(stdout.trim(), "");
