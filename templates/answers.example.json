@@ -1,0 +1,9 @@
+{
+  "appName": "my-app",
+  "title": "My Electron App",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "scripts": ["dev", "build", "dist"],
+  "features": ["preload", "eslint", "prettier"]
+}
