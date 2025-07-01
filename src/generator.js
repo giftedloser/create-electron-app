@@ -170,7 +170,7 @@ export async function scaffoldProject(answers) {
 
   // Copy feature templates conditionally
   for (const feature of answers.features) {
-    if (feature === "git" || feature === "darkmode") {
+    if (feature === "git") {
       // skip features handled separately
       continue;
     }
@@ -189,9 +189,6 @@ export async function scaffoldProject(answers) {
 // Conditionally inject main process imports for selected features
 const extraImports = [];
 
-if (answers.features.includes("darkmode")) {
-  extraImports.push("./darkmode.js");
-}
 
 if (answers.features.includes("sso")) {
   extraImports.push("./auth.js");
@@ -212,9 +209,6 @@ if (extraImports.length > 0) {
     // ignore file modification errors
   }
 }
-
-    }
-  }
 
   // Include electron-builder config if dist script selected
   if (answers.scripts.includes("dist")) {

@@ -32,10 +32,11 @@ describe("darkmode feature", () => {
         features: ["darkmode"],
       };
       const { outDir } = await scaffoldProject(answers);
-      const file = join(outDir, "src", "darkmode.js");
+      const file = join(outDir, "darkmode.js");
       assert.ok(existsSync(file));
       const mainFile = readFileSync(join(outDir, "src", "main.ts"), "utf8");
-      assert.match(mainFile, /import '\.\/darkmode\.js';/);
+      const matches = mainFile.match(/import '\.\/darkmode\.js';/g) || [];
+      assert.equal(matches.length, 1);
     } finally {
       process.chdir(cwd);
       process.env.PATH = originalPath;
