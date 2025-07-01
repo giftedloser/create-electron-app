@@ -185,15 +185,28 @@ export async function scaffoldProject(answers) {
     }
   }
 
-  // Handle darkmode feature separately
+  // Add main process imports for certain features
+  const extraImports = [];
   if (answers.features.includes("darkmode")) {
-    const darkSrc = path.resolve(__dirname, "../templates/with-darkmode/darkmode.js");
-    const darkDest = path.join(outDir, "src", "darkmode.js");
+    extraImports.push("./darkmode.js");
+  }
+  if (answers.features.includes("sso")) {
+    extraImports.push("./auth.js");
+  }
+  if (extraImports.length > 0) {
     try {
-      await fs.copyFile(darkSrc, darkDest);
-    } catch (e) {
-      await cleanupProject();
-      throw new Error(`Failed copying darkmode.js: ${e.message}`);
+      let mainContent = await fs.readFile(mainFile, "utf8");
+      const lines = mainContent.split(/\r?\n/);
+      let insertIdx = lines.findIndex((l) => !/^import /.test(l));
+      if (insertIdx === -1) insertIdx = lines.length;
+      for (const imp of extraImports) {
+        lines.splice(insertIdx, 0, `import '${imp}';`);
+        insertIdx++;
+      }
+      await fs.writeFile(mainFile, lines.join("\n"));
+    } catch {
+      // ignore modification errors
+
     }
   }
 
